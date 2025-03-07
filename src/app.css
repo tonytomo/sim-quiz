@@ -1,12 +1,12 @@
 @import 'tailwindcss';
 
 body {
-	background-color: #f7fafc; /* Equivalent to bg-gray-100 in TailwindCSS */
+	background-color: #f4f4f5; /* Equivalent to bg-zinc-100 in TailwindCSS */
 	letter-spacing: 0.05rem; /* Equivalent to tracking-tight in TailwindCSS */
 }
 @media (prefers-color-scheme: dark) {
 	body {
-		background-color: #1a202c; /* Equivalent to bg-gray-900 in TailwindCSS */
+		background-color: #292524; /* Equivalent to bg-stone-800 in TailwindCSS */
 		color: #e2e8f0; /* Equivalent to text-gray-300 in TailwindCSS */
 	}
 }

@@ -57,7 +57,7 @@ export function parseQuizQuestions(quiz: string): QuizQuestion {
 						}
 					} else if (lines[k].startsWith('@')) {
 						list.answer = lines[k].substring(1);
-						list.options.push(lines[k]);
+						list.options.push(lines[k].substring(1));
 					} else {
 						list.options.push(lines[k]);
 					}
@@ -89,7 +89,7 @@ export function parseQuizQuestions(quiz: string): QuizQuestion {
 					}
 				} else if (lines[j].startsWith('@')) {
 					list.answer = lines[j].substring(1);
-					list.options.push(lines[j]);
+					list.options.push(lines[j].substring(1));
 				} else {
 					list.options.push(lines[j]);
 				}

@@ -4,7 +4,7 @@
 	import quizStore, { resetQuiz } from '$lib/stores/quiz-store';
 	import theme from '$lib/themes/theme';
 
-	let countdown = 6;
+	let countdown = 4;
 	let refInput: HTMLInputElement | null = null;
 	const instruction = ['Upload a quiz file', 'Set the quiz', 'Start the quiz'];
 
@@ -56,41 +56,41 @@
 <Header />
 
 <main class={theme.container.block + ' text-center'}>
-	<section class={theme.container.flex + ' mt-12 text-gray-400'}>
+	<section class={theme.container.flex + ' mt-12 text-stone-500'}>
 		<input type="file" accept=".txt" hidden bind:this={refInput} on:change={handleChangeFile} />
 		<button
 			aria-label="Upload Quiz"
 			class={theme.button.base + theme.button.blue}
 			on:click={handleChooseFile}
 		>
-			<i class={'ri-file-paper-2-line' + ($quizStore.step === 0 ? ' animate-pulse' : '')}></i>
+			<i class={'ri-file-paper-2-fill' + ($quizStore.step === 0 ? ' animate-pulse' : '')}></i>
 		</button>
-		<i class="ri-arrow-right-s-line"></i>
+		<i class="ri-arrow-right-s-fill"></i>
 		<button
 			disabled={$quizStore.step < 1}
 			aria-label="Settings"
 			class={theme.button.base + theme.button.orange}
 			on:click={() => goto('/setting')}
 		>
-			<i class={'ri-equalizer-2-line' + ($quizStore.step === 1 ? ' animate-pulse' : '')}></i>
+			<i class={'ri-equalizer-2-fill' + ($quizStore.step === 1 ? ' animate-pulse' : '')}></i>
 		</button>
-		<i class="ri-arrow-right-s-line"></i>
+		<i class="ri-arrow-right-s-fill"></i>
 		<button
-			disabled={$quizStore.step < 2 || countdown < 6}
+			disabled={$quizStore.step < 2 || countdown < 4}
 			aria-label="Start Quiz"
 			class={theme.button.base +
 				theme.button.green +
 				(countdown === 0 ? 'scale-[500%] duration-200' : '')}
 			on:click={handleStartQuiz}
 		>
-			{#if countdown < 6}
+			{#if countdown < 4}
 				{countdown}
 			{:else}
-				<i class={'ri-timer-line' + ($quizStore.step === 2 ? ' animate-pulse' : '')}></i>
+				<i class={'ri-timer-fill' + ($quizStore.step === 2 ? ' animate-pulse' : '')}></i>
 			{/if}
 		</button>
 	</section>
-	<p class={theme.text.body + ' mt-4 text-gray-400'}>{instruction[$quizStore.step]}</p>
+	<p class={theme.text.small + ' mt-4 text-stone-500'}>{instruction[$quizStore.step]}</p>
 </main>
 
 <footer class={theme.container.bottom + ' p-4 text-center'}>
@@ -100,6 +100,6 @@
 		class={theme.button.base + theme.button.black + ' mt-2'}
 		on:click={() => goto('/writer')}
 	>
-		<i class="ri-quill-pen-line"></i>
+		<i class="ri-quill-pen-fill"></i>
 	</button>
 </footer>

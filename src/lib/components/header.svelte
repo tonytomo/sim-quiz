@@ -10,11 +10,19 @@
 		SimQuiz<span class={theme.text.logo + 'animate-pulse'}>.</span>
 	</figure>
 	{#if isBack}
-		<button aria-label="Back" class={theme.button.ghost} onclick={() => window.history.back()}>
+		<button
+			aria-label="Back"
+			class={theme.button.base + theme.button.black}
+			onclick={() => window.history.back()}
+		>
 			<i class="ri-arrow-go-back-line"></i>
 		</button>
 	{:else}
-		<button aria-label="About" class={theme.button.ghost} onclick={() => goto('/about')}>
+		<button
+			aria-label="About"
+			class={theme.button.base + theme.button.black}
+			onclick={() => goto('/about')}
+		>
 			<i class="ri-information-line"></i>
 		</button>
 	{/if}

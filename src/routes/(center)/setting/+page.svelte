@@ -35,6 +35,10 @@
 				alert('Invalid file format. Please upload a .txt file.');
 				return;
 			}
+			if (file.size > 1024) {
+				alert('File size exceeds 1kB. Please upload a smaller file.');
+				return;
+			}
 			const reader = new FileReader();
 			reader.onload = function () {
 				const content = reader.result as string;
@@ -62,7 +66,7 @@
 {:else}
 	<main class={theme.container.block + ' mt-4 text-center'}>
 		{#if $quizStore.file}
-			<section class={theme.container.block + ' text-gray-400'}>
+			<section class={theme.container.block + ' text-stone-500'}>
 				<h3 class={theme.text.small}>
 					File: {$quizStore.file.filename + ' | ' + convertBytes($quizStore.file.size)}
 				</h3>
@@ -70,7 +74,7 @@
 					Lock: {isLocked ? 'Locked' : 'Unlocked'}
 				</h3>
 				{#if !isLocked && $quizStore.setting && $quizStore.question}
-					<ul class={theme.container.block}>
+					<ul class={theme.container.block + 'text-white'}>
 						<li class={theme.text.small}>
 							Total Question: {Math.min(
 								$quizStore.setting.maxQuestions,
