@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '../app.css';
+	import 'remixicon/fonts/remixicon.css';
 	let { children } = $props();
 </script>
 
@@ -11,4 +12,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </svelte:head>
 
-{@render children()}
+<div class=" flex h-[100svh] flex-col justify-center gap-4">
+	{@render children()}
+</div>

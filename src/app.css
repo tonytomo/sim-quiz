@@ -1,1 +1,22 @@
 @import 'tailwindcss';
+
+body {
+	background-color: #f7fafc; /* Equivalent to bg-gray-100 in TailwindCSS */
+	letter-spacing: 0.05rem; /* Equivalent to tracking-tight in TailwindCSS */
+}
+@media (prefers-color-scheme: dark) {
+	body {
+		background-color: #1a202c; /* Equivalent to bg-gray-900 in TailwindCSS */
+		color: #e2e8f0; /* Equivalent to text-gray-300 in TailwindCSS */
+	}
+}
+
+::-webkit-scrollbar {
+	visibility: hidden;
+}
+::-webkit-scrollbar-thumb {
+	visibility: hidden;
+}
+::-webkit-scrollbar-track {
+	visibility: hidden;
+}
