@@ -1,12 +1,17 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import Header from '$lib/components/header.svelte';
-	import { resetQuiz } from '$lib/stores/quiz-store';
+	import quizStore, { resetQuiz } from '$lib/stores/quiz-store';
 	import theme from '$lib/themes/theme';
 
 	function handleHome() {
 		resetQuiz();
 		goto('/');
+	}
+
+	function handleRedoQuiz() {
+		$quizStore.step = 3;
+		goto('/quiz');
 	}
 </script>
 
@@ -28,7 +33,7 @@
 	<button
 		aria-label="Retry Quiz"
 		class={theme.button.base + theme.button.blue}
-		on:click={() => goto('/quiz')}
+		on:click={handleRedoQuiz}
 	>
 		<i class="ri-reset-right-line"></i>
 	</button>

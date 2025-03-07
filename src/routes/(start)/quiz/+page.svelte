@@ -1,8 +1,10 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import Header from '$lib/components/header.svelte';
 	import quizStore, { resetQuiz } from '$lib/stores/quiz-store';
 	import theme from '$lib/themes/theme';
 	import type { Question } from '$lib/types/quiz-question';
+	import { formatTime } from '$lib/utils/formater';
 	import { onMount } from 'svelte';
 
 	let refInput: HTMLInputElement | null = null;
@@ -12,8 +14,10 @@
 	let totalQuestions = 0;
 	let questions: Question[] = [];
 	let userAnswers: string[] = [];
+	let timer: number = 0;
 
 	onMount(() => {
+		timer = 0;
 		if ($quizStore.step !== 3) {
 			resetQuiz();
 			goto('/');
@@ -26,6 +30,8 @@
 					questions = $quizStore.question.lists;
 				}
 				totalQuestions = questions.length;
+				timer = $quizStore.setting.timePerQuestion * totalQuestions;
+				startTimer();
 			}
 		}
 	});
@@ -45,17 +51,54 @@
 		const value = target.value;
 		userAnswers[questionIndex] = value;
 	}
+
+	function startTimer() {
+		if (timer > 0 && $quizStore.step === 3) {
+			timer -= 1;
+			setTimeout(startTimer, 1000);
+		} else {
+			handleResult();
+		}
+	}
+
+	function handleResult() {
+		$quizStore.step = 4;
+		goto('/result');
+	}
+
+	function handleReset() {
+		resetQuiz();
+		goto('/');
+	}
+
+	window.onbeforeunload = () => {
+		if ($quizStore.step === 3) return 'Are you sure you want to leave?';
+	};
 </script>
 
 {#if isLoading}
-	<main class={theme.container.block + ' mt-4 flex h-full items-center justify-center text-center'}>
+	<main
+		class={theme.container.block + ' mt-4 flex h-[100svh] items-center justify-center text-center'}
+	>
 		<div class="animate-ping text-4xl">
 			<i class="ri-quill-pen-fill"></i>
 		</div>
 	</main>
 {:else if $quizStore.question === null}
-	<main class={theme.container.block + 'mt-4 text-center'}>
+	<Header />
+	<main
+		class={theme.container.block +
+			'mt-4 flex h-[100svh] flex-col items-center justify-center gap-4 text-center'}
+	>
 		<p class={theme.text.body}>No questions found. Please go back and try again.</p>
+		<button
+			aria-label="Go Back"
+			type="button"
+			class={theme.button.base + theme.button.black}
+			on:click={handleReset}
+		>
+			<i class="ri-home-fill"></i>
+		</button>
 	</main>
 {:else}
 	{#if $quizStore.setting?.canGoBack}
@@ -82,6 +125,14 @@
 		</header>
 	{/if}
 	<main class={theme.container.block}>
+		<section class="flex justify-end">
+			<p class={timer <= 30 ? theme.text.timerRed : theme.text.timer}>
+				{#if timer <= 30}
+					<i class="ri-timer-fill animate-pulse"></i>
+				{/if}
+				Time left: {formatTime(timer)}
+			</p>
+		</section>
 		{#each $quizStore.question.refs[refText].paragraphs as paragraph}
 			<p class={theme.text.paragraph}>
 				{paragraph}
@@ -146,7 +197,7 @@
 			aria-label="Submit answer"
 			disabled={questionIndex < totalQuestions - 1}
 			class={theme.button.base + theme.button.green}
-			on:click={() => goto('/result')}
+			on:click={handleResult}
 		>
 			<i class="ri-check-fill"></i>
 		</button>

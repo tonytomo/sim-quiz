@@ -7,7 +7,11 @@ const theme = {
 		body: 'text-lg font-light ',
 		small: 'text-md font-light ',
 		bold: 'text-md font-bold ',
-		paragraph: 'my-2 text-md font-light indent-8 text-justify '
+		paragraph: 'my-2 text-md font-light indent-8 text-justify ',
+		timer:
+			'text-md text-end px-2 py-1 border border-stone-400 bg-stone-200 dark:border-stone-500 dark:bg-stone-700 rounded-md ',
+		timerRed:
+			'text-md text-end px-2 py-1 border border-red-300 bg-red-100 dark:border-red-800 dark:bg-red-950 rounded-md '
 	},
 	container: {
 		top: 'fixed top-0 left-0 right-0 z-50 flex flex-row items-center justify-between p-2 bg-transparent ',
@@ -30,12 +34,9 @@ const theme = {
 		ghost:
 			'h-8 w-8 cursor-pointer text-2xl text-zinc-600 bg-transparent dark:text-white active:scale-90 duration-200 disabled:bg-none ',
 		blue: 'bg-blue-500 hover:bg-blue-400 dark:bg-blue-700 dark:hover:bg-blue-600 ',
-		orange:
-			'bg-yellow-500 hover:bg-yellow-400 dark:bg-yellow-700 dark:hover:bg-yellow-600 ',
-		green:
-			'bg-green-500 hover:bg-green-400  dark:bg-green-700 dark:hover:bg-green-600 ',
-		black:
-			'bg-stone-500 hover:bg-stone-400 dark:bg-stone-700 dark:hover:bg-stone-600 '
+		orange: 'bg-yellow-500 hover:bg-yellow-400 dark:bg-yellow-700 dark:hover:bg-yellow-600 ',
+		green: 'bg-green-500 hover:bg-green-400  dark:bg-green-700 dark:hover:bg-green-600 ',
+		black: 'bg-stone-500 hover:bg-stone-400 dark:bg-stone-700 dark:hover:bg-stone-600 '
 	}
 };
 

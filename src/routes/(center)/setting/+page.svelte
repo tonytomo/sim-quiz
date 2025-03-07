@@ -10,6 +10,7 @@
 	let refInput: HTMLInputElement | null = null;
 	let isLoading = true;
 	let isLocked = true;
+	let totalQuestions = 0;
 
 	onMount(() => {
 		if ($quizStore.file) {
@@ -18,6 +19,11 @@
 			if (!isLocked) {
 				$quizStore.setting = parseQuizSettings($quizStore.file.content);
 				$quizStore.question = parseQuizQuestions($quizStore.file.content);
+
+				totalQuestions = Math.min(
+					$quizStore.setting.maxQuestions,
+					$quizStore.question.lists.length
+				);
 			}
 		} else {
 			goto('/');
@@ -74,15 +80,12 @@
 					Lock: {isLocked ? 'Locked' : 'Unlocked'}
 				</h3>
 				{#if !isLocked && $quizStore.setting && $quizStore.question}
-					<ul class={theme.container.block + 'text-white'}>
+					<ul class={theme.container.block + 'text-black dark:text-white'}>
 						<li class={theme.text.small}>
-							Total Question: {Math.min(
-								$quizStore.setting.maxQuestions,
-								$quizStore.question.lists.length
-							)}
+							Total Question: {totalQuestions}
 						</li>
 						<li class={theme.text.small}>
-							Time Per Question: {$quizStore.setting.timePerQuestion}s
+							Total Time: {$quizStore.setting.timePerQuestion * totalQuestions}s
 						</li>
 						<li class={theme.text.small}>
 							Can Go Back: {$quizStore.setting.canGoBack ? 'Yes' : 'No'}
