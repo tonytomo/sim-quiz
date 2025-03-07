@@ -35,9 +35,9 @@
 		class={theme.button.base + theme.button.blue}
 		on:click={handleRedoQuiz}
 	>
-		<i class="ri-reset-right-line"></i>
+		<i class="ri-reset-right-fill"></i>
 	</button>
 	<button aria-label="Home" class={theme.button.base + theme.button.orange} on:click={handleHome}>
-		<i class="ri-home-line"></i>
+		<i class="ri-home-fill"></i>
 	</button>
 </footer>

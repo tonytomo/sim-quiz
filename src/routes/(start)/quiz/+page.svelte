@@ -102,7 +102,7 @@
 	</main>
 {:else}
 	{#if $quizStore.setting?.canGoBack}
-		<header class={theme.container.block + 'overflow-x-auto'}>
+		<header class={theme.container.block + 'overflow-x-auto md:py-2'}>
 			<section class={theme.container.number + 'w-min'}>
 				{#each questions as question, index}
 					<button class={theme.container.box} on:click={() => (questionIndex = index)}>
