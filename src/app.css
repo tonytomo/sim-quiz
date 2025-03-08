@@ -1,22 +1,130 @@
 @import 'tailwindcss';
 
-body {
-	background-color: #f4f4f5; /* Equivalent to bg-zinc-100 in TailwindCSS */
-	letter-spacing: 0.05rem; /* Equivalent to tracking-tight in TailwindCSS */
-}
-@media (prefers-color-scheme: dark) {
-	body {
-		background-color: #292524; /* Equivalent to bg-stone-800 in TailwindCSS */
-		color: #e2e8f0; /* Equivalent to text-gray-300 in TailwindCSS */
-	}
-}
-
+/*
+Utility Classes
+*/
 ::-webkit-scrollbar {
-	visibility: hidden;
+	@apply invisible;
 }
 ::-webkit-scrollbar-thumb {
-	visibility: hidden;
+	@apply invisible;
 }
 ::-webkit-scrollbar-track {
-	visibility: hidden;
+	@apply invisible;
+}
+
+/*
+Layout Related Styles
+*/
+.layout-center {
+	@apply flex flex-col justify-center text-slate-800 dark:text-slate-100;
+}
+.layout-start {
+	@apply flex flex-col justify-start text-slate-800 dark:text-slate-100;
+}
+
+/*
+Text Related Styles
+*/
+.logo {
+	@apply bg-gradient-to-r from-sky-500 to-green-500 bg-clip-text text-3xl font-black text-transparent select-none;
+}
+.title {
+	@apply text-lg font-semibold;
+}
+.subtitle {
+	@apply text-sm text-slate-400;
+}
+.paragraph {
+	@apply my-2 text-justify indent-8 text-sm;
+}
+.timer-gray {
+	@apply rounded-md border border-slate-400 bg-slate-200 px-2 py-1 text-end text-sm dark:border-slate-400 dark:bg-slate-700;
+}
+.timer-red {
+	@apply rounded-md border border-red-300 bg-red-100 px-2 py-1 text-end text-sm dark:border-red-800 dark:bg-red-950;
+}
+.active {
+	@apply bg-blue-300 text-base leading-10 font-semibold dark:bg-blue-900;
+}
+.inactive {
+	@apply bg-slate-300 text-base leading-10 font-semibold dark:bg-slate-900;
+}
+.correct {
+	@apply bg-green-300 text-base leading-10 font-semibold dark:bg-green-900;
+}
+.wrong {
+	@apply bg-red-300 text-base leading-10 font-semibold dark:bg-red-900;
+}
+
+/*
+Container Related Styles
+*/
+.container-block {
+	@apply container mx-auto p-4 select-none;
+}
+.container-center {
+	@apply container mx-auto flex items-center justify-center p-4 select-none;
+}
+.container-stack {
+	@apply container mx-auto flex flex-col items-center justify-center p-4 select-none;
+}
+.container-hstack {
+	@apply container mx-auto flex flex-row items-center justify-center p-4 select-none;
+}
+.container-flex {
+	@apply container mx-auto flex flex-col select-none md:flex-row;
+}
+.container-flex-row {
+	@apply container mx-auto flex flex-row items-center p-4 select-none;
+}
+.container-flex-col {
+	@apply container mx-auto flex flex-col items-center p-4 select-none;
+}
+.container-top {
+	@apply fixed top-0 right-0 left-0 z-50 container mx-auto flex p-4 select-none;
+}
+.container-bottom {
+	@apply fixed right-0 bottom-0 left-0 z-50 container mx-auto flex p-4 select-none;
+}
+.container-color {
+	@apply rounded-2xl border border-slate-400 bg-slate-100 p-4 dark:border-slate-600 dark:bg-slate-900;
+}
+
+/*
+Button Related Styles
+*/
+.box {
+	@apply h-10 w-10 cursor-pointer rounded-2xl;
+}
+.base {
+	@apply text-2xl duration-200 hover:scale-95 active:scale-90 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400 dark:disabled:bg-slate-900 dark:disabled:text-slate-600;
+}
+.btn-ghost {
+	@apply bg-transparent text-slate-400 dark:text-slate-400;
+}
+.btn-blue {
+	@apply bg-blue-500 text-white dark:bg-blue-600;
+}
+.btn-green {
+	@apply bg-green-500 text-white dark:bg-green-600;
+}
+.btn-yellow {
+	@apply bg-yellow-500 text-white dark:bg-yellow-600;
+}
+.btn-slate {
+	@apply bg-slate-700 text-white dark:bg-slate-600;
+}
+
+/*
+Input Related Styles
+*/
+.ip-radio {
+	@apply flex flex-row items-center gap-2;
+}
+.radio-circle {
+	@apply relative mr-2 h-4 w-4 rounded-full border border-stone-300 text-2xl dark:border-stone-600;
+}
+.radio-icon {
+	@apply absolute top-[-75%] left-[-60%] text-3xl;
 }

@@ -1,48 +1,53 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { onMount } from 'svelte';
 	import Header from '$lib/components/header.svelte';
-	import quizStore, { resetQuiz } from '$lib/stores/quiz-store';
-	import theme from '$lib/themes/theme';
+	import quiz, { resetQuiz } from '$lib/stores/quiz-store';
 	import { convertBytes } from '$lib/utils/converter';
 	import { parseQuizQuestions, parseQuizSettings } from '$lib/utils/parser';
-	import { onMount } from 'svelte';
+	import { Step } from '$lib/types/quiz-step';
+	import type { Question } from '$lib/types/quiz-question';
 
-	let refInput: HTMLInputElement | null = null;
+	let ref: HTMLInputElement | null = null;
 	let isLoading = true;
 	let isLocked = true;
 	let totalQuestions = 0;
+	let questions: Question[] = [];
 
 	onMount(() => {
-		if ($quizStore.step > 2) {
+		if ($quiz.step > Step.ready) {
 			resetQuiz();
 			goto('/');
-		} else if ($quizStore.file) {
+			return;
+		}
+		if ($quiz.file) {
 			isLoading = false;
-			isLocked = $quizStore.file.content.includes('Locked');
-			if (!isLocked) {
-				$quizStore.setting = parseQuizSettings($quizStore.file.content);
-				$quizStore.question = parseQuizQuestions($quizStore.file.content);
-
-				if ($quizStore.setting.isRandom) {
-					$quizStore.question.lists.sort(() => Math.random() - 0.5);
-				}
-
-				totalQuestions = Math.min(
-					$quizStore.setting.maxQuestions,
-					$quizStore.question.lists.length
-				);
-			}
+			isLocked = $quiz.file.content.includes('Locked');
+			prepareQuiz($quiz.file.content);
 		} else {
+			isLoading = false;
 			goto('/');
 		}
 	});
 
-	function handleChooseFile() {
-		if (refInput) refInput.click();
+	function prepareQuiz(content: string) {
+		if (isLocked) return;
+
+		$quiz.setting = parseQuizSettings(content);
+		$quiz.question = parseQuizQuestions(content);
+
+		questions = $quiz.question.lists;
+		if ($quiz.setting.isRandom) questions.sort(() => Math.random() - 0.5);
+
+		totalQuestions = Math.min($quiz.setting.maxQuestions, questions.length);
+	}
+
+	function handleClick() {
+		if (ref) ref.click();
 	}
 
 	function handleChangeFile() {
-		const file = refInput?.files?.[0];
+		const file = ref?.files?.[0];
 		if (file) {
 			if (file.type !== 'text/plain') {
 				alert('Invalid file format. Please upload a .txt file.');
@@ -56,14 +61,23 @@
 			reader.onload = function () {
 				const content = reader.result as string;
 				isLocked = false;
-				console.log(content.split(',')[0].trim());
+				console.log(content);
+
+				/**
+				@import { decrypt } from '$lib/utils/encryptor';
+
+				const encryptedText = $quiz.file.content;
+				const decryptedText = decrypt(encryptedText, content);
+
+				prepareQuiz(decryptedText.substring(6));
+				*/
 			};
 			reader.readAsText(file);
 		}
 	}
 
-	function handleContinue() {
-		$quizStore.step = 2;
+	function handleReady() {
+		$quiz.step = Step.ready;
 		goto('/');
 	}
 </script>
@@ -71,67 +85,45 @@
 <Header />
 
 {#if isLoading}
-	<main class={theme.container.block + ' mt-4 text-center'}>
-		<div class="animate-ping text-4xl">
-			<i class="ri-quill-pen-line"></i>
-		</div>
+	<main class="container-center">
+		<i class="ri-quill-pen-line animate-ping text-4xl"></i>
 	</main>
 {:else}
-	<main class={theme.container.block + ' mt-4 text-center'}>
-		{#if $quizStore.file}
-			<section class={theme.container.block + ' text-stone-500'}>
-				<h3 class={theme.text.small}>
-					File: {$quizStore.file.filename + ' | ' + convertBytes($quizStore.file.size)}
-				</h3>
-				<h3 class={theme.text.small}>
-					Lock: {isLocked ? 'Locked' : 'Unlocked'}
-				</h3>
-				{#if !isLocked && $quizStore.setting && $quizStore.question}
-					<ul class={theme.container.block + 'text-black dark:text-white'}>
-						<li class={theme.text.small}>
-							Total Question: {totalQuestions}
-						</li>
-						<li class={theme.text.small}>
-							Total Time: {$quizStore.setting.timePerQuestion * totalQuestions}s
-						</li>
-						<li class={theme.text.small}>
-							Can Go Back: {$quizStore.setting.canGoBack ? 'Yes' : 'No'}
-						</li>
-						<li class={theme.text.small}>
-							Is Random: {$quizStore.setting.isRandom ? 'Yes' : 'No'}
-						</li>
+	<main class="container-stack gap-2">
+		{#if $quiz.file}
+			<h3 class="subtitle">
+				File: {$quiz.file.filename + ' | ' + convertBytes($quiz.file.size)}
+			</h3>
+			<h3 class="subtitle">
+				Status: {isLocked ? 'Locked' : 'Unlocked'}
+			</h3>
+			<section class="container-center">
+				{#if !isLocked && $quiz.setting && $quiz.question}
+					<ul class="container-color text-sm">
+						<li>Question: {totalQuestions}</li>
+						<li>Time: {$quiz.setting.timePerQuestion * totalQuestions}s</li>
+						<li>Review: {$quiz.setting.canGoBack ? 'Yes' : 'No'}</li>
+						<li>Random: {$quiz.setting.isRandom ? 'Yes' : 'No'}</li>
 					</ul>
 				{/if}
-				{#if !isLocked}
-					<h3 class={theme.text.subtitle}>Ready to Start?</h3>
-				{/if}
 			</section>
+			{#if !isLocked}
+				<h3 class="subtitle">Ready?</h3>
+			{/if}
 		{/if}
 	</main>
 
-	<footer class={theme.container.bottom + ' flex-row justify-end p-4 text-center'}>
-		<button
-			aria-label="Back"
-			class={theme.button.base + theme.button.black}
-			on:click={() => window.history.back()}
-		>
+	<footer class="container-bottom justify-end gap-2">
+		<button aria-label="Back" class="box base btn-slate" on:click={() => window.history.back()}>
 			<i class="ri-arrow-go-back-line"></i>
 		</button>
 		{#if isLocked}
-			<input type="file" accept=".txt" hidden bind:this={refInput} on:change={handleChangeFile} />
-			<button
-				aria-label="Upload Key"
-				class={theme.button.base + theme.button.orange}
-				on:click={handleChooseFile}
-			>
+			<input type="file" accept=".txt" hidden bind:this={ref} on:change={handleChangeFile} />
+			<button aria-label="Upload Key" class="box base btn-yellow" on:click={handleClick}>
 				<i class="ri-key-line"></i>
 			</button>
 		{:else}
-			<button
-				aria-label="Continue"
-				class={theme.button.base + theme.button.green}
-				on:click={handleContinue}
-			>
+			<button aria-label="Continue" class="box base btn-green" on:click={handleReady}>
 				<i class="ri-check-line"></i>
 			</button>
 		{/if}

@@ -1,16 +1,16 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import Header from '$lib/components/header.svelte';
-	import quizStore, { resetQuiz } from '$lib/stores/quiz-store';
-	import theme from '$lib/themes/theme';
 	import { onMount } from 'svelte';
+	import Header from '$lib/components/header.svelte';
+	import quiz, { resetQuiz } from '$lib/stores/quiz-store';
+	import { Step } from '$lib/types/quiz-step';
 
+	const instruction = ['Upload a quiz file', 'Prepare the quiz', 'Start the quiz'];
 	let countdown = 4;
 	let refInput: HTMLInputElement | null = null;
-	const instruction = ['Upload a quiz file', 'Set the quiz', 'Start the quiz'];
 
 	onMount(() => {
-		if ($quizStore.step > 2) {
+		if ($quiz.step > Step.ready) {
 			resetQuiz();
 			goto('/');
 		}
@@ -34,15 +34,13 @@
 			const reader = new FileReader();
 			reader.onload = function () {
 				const content = reader.result as string;
-
 				resetQuiz();
-
-				$quizStore.step = 1;
-				$quizStore.file = {
-					file: file,
+				$quiz.step = Step.prepare;
+				$quiz.file = {
+					file,
 					filename: file.name,
 					size: file.size,
-					content: content
+					content
 				};
 			};
 			reader.readAsText(file);
@@ -50,62 +48,63 @@
 	}
 
 	function handleStartQuiz() {
-		if (countdown > 1) {
+		countdown--;
+		const interval = setInterval(() => {
 			countdown--;
-			setTimeout(handleStartQuiz, 1000);
-		} else {
-			countdown--;
-			$quizStore.step = 3;
-			goto('/quiz');
-		}
+			if (countdown < 1) {
+				$quiz.step = Step.start;
+				goto('/quiz');
+				clearInterval(interval);
+			}
+		}, 1000);
 	}
 </script>
 
-<Header />
+<Header isDisabled={countdown < 4} />
 
-<main class={theme.container.block + ' text-center'}>
-	<section class={theme.container.flex + ' mt-12 text-stone-500'}>
+<main class="container-stack">
+	<section class="container-hstack gap-2 text-slate-400">
 		<input type="file" accept=".txt" hidden bind:this={refInput} on:change={handleChangeFile} />
 		<button
+			disabled={countdown < 4}
 			aria-label="Upload Quiz"
-			class={theme.button.base + theme.button.blue}
+			class="box base btn-blue"
 			on:click={handleChooseFile}
 		>
-			<i class={'ri-file-paper-2-fill' + ($quizStore.step === 0 ? ' animate-pulse' : '')}></i>
+			<i class="ri-file-paper-2-fill"></i>
 		</button>
-		<i class="ri-arrow-right-s-fill"></i>
+		<i class="ri-arrow-right-s-line"></i>
 		<button
-			disabled={$quizStore.step < 1}
+			disabled={$quiz.step < Step.prepare || countdown < 4}
 			aria-label="Settings"
-			class={theme.button.base + theme.button.orange}
+			class="box base btn-yellow"
 			on:click={() => goto('/setting')}
 		>
-			<i class={'ri-equalizer-2-fill' + ($quizStore.step === 1 ? ' animate-pulse' : '')}></i>
+			<i class="ri-equalizer-2-fill"></i>
 		</button>
-		<i class="ri-arrow-right-s-fill"></i>
+		<i class="ri-arrow-right-s-line"></i>
 		<button
-			disabled={$quizStore.step < 2 || countdown < 4}
+			disabled={$quiz.step < Step.ready || countdown < 4}
 			aria-label="Start Quiz"
-			class={theme.button.base +
-				theme.button.green +
-				(countdown === 0 ? 'scale-[500%] duration-200' : '')}
+			class="box base btn-green"
 			on:click={handleStartQuiz}
 		>
 			{#if countdown < 4}
 				{countdown}
 			{:else}
-				<i class={'ri-timer-fill' + ($quizStore.step === 2 ? ' animate-pulse' : '')}></i>
+				<i class="ri-timer-fill"></i>
 			{/if}
 		</button>
 	</section>
-	<p class={theme.text.small + ' mt-4 text-stone-500'}>{instruction[$quizStore.step]}</p>
+	<p class="text-md">{instruction[$quiz.step]}</p>
 </main>
 
-<footer class={theme.container.bottom + ' p-4 text-center'}>
-	<h3 class={theme.text.subtitle}>Want to contribute?</h3>
+<footer class="container-bottom flex-col items-end gap-2">
+	<h3 class="subtitle">Contribute?</h3>
 	<button
+		disabled={countdown < 4}
 		aria-label="Are you a Writer?"
-		class={theme.button.base + theme.button.black + ' mt-2'}
+		class="box base btn-slate"
 		on:click={() => goto('/writer')}
 	>
 		<i class="ri-quill-pen-fill"></i>

@@ -1,39 +1,41 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { onMount } from 'svelte';
 	import Header from '$lib/components/header.svelte';
-	import quizStore, { resetQuiz } from '$lib/stores/quiz-store';
-	import theme from '$lib/themes/theme';
+	import quiz, { resetQuiz } from '$lib/stores/quiz-store';
 	import type { Question } from '$lib/types/quiz-question';
+	import { Step } from '$lib/types/quiz-step';
 	import { calculateResult } from '$lib/utils/calculator';
 	import { formatTime } from '$lib/utils/formater';
-	import { onMount } from 'svelte';
 
-	let refInput: HTMLInputElement | null = null;
+	let ref: HTMLInputElement | null = null;
 	let refText = -1;
 	let questionIndex = 0;
 	let isLoading = true;
+	let canGoBack = false;
 	let totalQuestions = 0;
 	let questions: Question[] = [];
 	let userAnswers: string[] = [];
-	let timer: number = 0;
+	let timer = 0;
 
 	onMount(() => {
-		timer = 0;
-		if ($quizStore.step === 4) {
+		if ($quiz.step === Step.done) {
 			isLoading = false;
-			if ($quizStore.question && $quizStore.setting && $quizStore.result) {
-				questions = $quizStore.question.lists;
-				totalQuestions = questions.length;
-				userAnswers = $quizStore.result.answers;
-			}
-		} else if ($quizStore.step === 3) {
+			if ($quiz.question) questions = $quiz.question.lists;
+			if ($quiz.result) userAnswers = $quiz.result.answers;
+			if ($quiz.setting) canGoBack = $quiz.setting.canGoBack;
+
+			totalQuestions = questions.length;
+		} else if ($quiz.step === Step.start) {
 			isLoading = false;
-			if ($quizStore.question && $quizStore.setting) {
-				questions = $quizStore.question.lists;
-				totalQuestions = questions.length;
-				timer = $quizStore.setting.timePerQuestion * totalQuestions;
-				startTimer();
+			if ($quiz.question) questions = $quiz.question.lists;
+			totalQuestions = questions.length;
+
+			if ($quiz.setting) {
+				timer = $quiz.setting.timePerQuestion * totalQuestions;
+				canGoBack = $quiz.setting.canGoBack;
 			}
+			startTimer();
 		} else {
 			resetQuiz();
 			goto('/');
@@ -41,13 +43,9 @@
 	});
 
 	$: {
-		if ($quizStore.question && $quizStore.step) {
-			refText = $quizStore.question.lists[questionIndex].refIndex;
-
-			const activeQuestion = document.querySelector('.bg-blue-400');
-			if (activeQuestion && questionIndex)
-				activeQuestion.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
-		}
+		const active = document.querySelector('.active');
+		if (active) active.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+		if ($quiz.question) refText = $quiz.question.lists[questionIndex].refIndex;
 	}
 
 	function handleChooseAnswer(event: Event) {
@@ -57,24 +55,21 @@
 	}
 
 	function startTimer() {
-		if (timer > 0 && $quizStore.step === 3) {
-			timer -= 1;
-			setTimeout(startTimer, 1000);
-		} else {
-			handleResult();
-		}
+		const interval = setInterval(() => {
+			timer--;
+			if (timer < 1) {
+				handleResult();
+				clearInterval(interval);
+			}
+		}, 1000);
 	}
 
 	function handleResult() {
-		if (!$quizStore.setting || !$quizStore.question) return;
+		if (!$quiz.setting || !$quiz.question) return;
 
-		$quizStore.step = 4;
-		$quizStore.result = calculateResult(
-			$quizStore.setting,
-			$quizStore.question,
-			userAnswers,
-			timer
-		);
+		isLoading = true;
+		$quiz.step = Step.done;
+		$quiz.result = calculateResult($quiz.setting, $quiz.question, userAnswers, timer);
 		goto('/result');
 	}
 
@@ -84,54 +79,43 @@
 	}
 
 	window.onbeforeunload = () => {
-		if ($quizStore.step === 3) return 'Are you sure you want to leave?';
+		if ($quiz.step === 3) return 'Are you sure you want to leave?';
 	};
 </script>
 
 {#if isLoading}
-	<main
-		class={theme.container.block + ' mt-4 flex h-[100svh] items-center justify-center text-center'}
-	>
-		<div class="animate-ping text-4xl">
-			<i class="ri-quill-pen-fill"></i>
-		</div>
-	</main>
-{:else if $quizStore.question === null}
 	<Header />
-	<main
-		class={theme.container.block +
-			'mt-4 flex h-[100svh] flex-col items-center justify-center gap-4 text-center'}
-	>
-		<p class={theme.text.body}>No questions found. Please go back and try again.</p>
-		<button
-			aria-label="Go Back"
-			type="button"
-			class={theme.button.base + theme.button.black}
-			on:click={handleReset}
-		>
+	<main class="container-center h-[100svh]">
+		<i class="ri-quill-pen-line animate-ping text-4xl"></i>
+	</main>
+{:else if $quiz.question === null}
+	<Header />
+	<main class="container-stack">
+		<p class="text-sm">No questions found. Please go back and try again.</p>
+		<button aria-label="Go Back" type="button" class="box base btn-slate" on:click={handleReset}>
 			<i class="ri-home-fill"></i>
 		</button>
 	</main>
 {:else}
-	{#if $quizStore.setting?.canGoBack}
-		<header class={theme.container.block + 'overflow-x-auto md:py-2'}>
-			<section class={theme.container.number + 'w-min'}>
+	{#if canGoBack}
+		<header class="container-flex-row overflow-x-auto pb-0">
+			<section class="flex w-min gap-2">
 				{#each questions as question, index}
-					<button class={theme.container.box} on:click={() => (questionIndex = index)}>
+					<button class="box base" on:click={() => (questionIndex = index)}>
 						{#if questionIndex === index}
-							<div class={theme.icon.box + 'bg-blue-400 dark:bg-blue-900'}>
+							<div class="box active">
 								{index + 1}
 							</div>
-						{:else if $quizStore.step === 4 && userAnswers[index] && userAnswers[index] !== questions[index].answer}
-							<div class={theme.icon.box + 'bg-red-400 dark:bg-red-900'}>
+						{:else if $quiz.step === 4 && userAnswers[index] !== questions[index].answer}
+							<div class="box wrong">
 								{index + 1}
 							</div>
 						{:else if userAnswers[index]}
-							<div class={theme.icon.box + 'bg-green-400 dark:bg-green-900'}>
+							<div class="box correct">
 								{index + 1}
 							</div>
 						{:else}
-							<div class={theme.icon.box + 'bg-gray-300 dark:bg-zinc-900'}>
+							<div class="box inactive">
 								{index + 1}
 							</div>
 						{/if}
@@ -140,11 +124,11 @@
 			</section>
 		</header>
 	{/if}
-	<main class={theme.container.block}>
-		{#if $quizStore.step === 3}
-			<section class="flex justify-between">
-				<p class={theme.text.bold}>{questionIndex + 1}/{totalQuestions}</p>
-				<p class={timer <= 30 ? theme.text.timerRed : theme.text.timer}>
+	<main class="container-block">
+		{#if $quiz.step === 3}
+			<section class="mb-4 flex justify-between">
+				<p class="text-sm font-bold">{questionIndex + 1}/{totalQuestions}</p>
+				<p class={timer <= 30 ? 'timer-red' : 'timer-gray'}>
 					{#if timer <= 30}
 						<i class="ri-timer-fill animate-pulse"></i>
 					{/if}
@@ -152,43 +136,40 @@
 				</p>
 			</section>
 		{/if}
-		<section class="flex flex-col items-stretch gap-4 md:flex-row">
+		<section class="container-flex gap-8">
 			<div class="flex-1">
-				{#each $quizStore.question.refs[refText].paragraphs as paragraph}
-					<p class={theme.text.paragraph}>
+				{#each $quiz.question.refs[refText].paragraphs as paragraph}
+					<p class="paragraph">
 						{paragraph}
 					</p>
 				{/each}
 			</div>
 			<div class="flex-1">
-				<p class={theme.text.bold + 'pt-4'}>
+				<p class="text-sm font-bold">
 					{questions[questionIndex].question}
 				</p>
-				<section class={theme.container.answer}>
+				<section class="flex flex-col gap-2 py-4">
 					{#each questions[questionIndex].options as option}
-						<label class={theme.text.small + theme.input.radio}>
+						<label class="ip-radio">
 							<input
 								type="radio"
 								name="option"
 								value={option}
-								disabled={$quizStore.step === 4}
+								disabled={$quiz.step === 4}
 								hidden
 								checked={userAnswers[questionIndex] === option}
-								bind:this={refInput}
+								bind:this={ref}
 								on:change={handleChooseAnswer}
 							/>
-							<div
-								class="relative mr-2 h-4 w-4 rounded-full border border-stone-300 text-2xl dark:border-stone-600"
-							>
-								{#if $quizStore.step === 4 && option === questions[questionIndex].answer}
-									<i class="ri-circle-line absolute top-[-75%] left-[-60%] text-3xl text-green-600"
-									></i>
+							<div class="radio-circle">
+								{#if $quiz.step === 4 && option === questions[questionIndex].answer}
+									<i class="ri-circle-line radio-icon text-green-600"></i>
 								{/if}
 								{#if userAnswers[questionIndex] === option}
-									<i class="ri-close-large-line absolute top-[-75%] left-[-60%] text-3xl"></i>
+									<i class="ri-close-large-line radio-icon"></i>
 								{/if}
 							</div>
-							<span>{option}</span>
+							<span class="max-w-[40ch] text-sm">{option}</span>
 						</label>
 					{/each}
 				</section>
@@ -196,30 +177,25 @@
 		</section>
 	</main>
 
-	<footer
-		class={theme.container.block +
-			'flex flex-col justify-between gap-4 p-4 text-center md:flex-row'}
-	>
-		{#if $quizStore.step === 4}
-			<div class="flex-1 text-left">
-				<p class={theme.text.bold}>
+	<footer class="container-flex gap-4 p-4">
+		{#if $quiz.step === 4}
+			<div class="container-color flex-1 text-left">
+				<p class="mb-2 text-sm font-bold">
 					<i class="ri-lightbulb-fill text-yellow-500"></i>
 					Explanation:
 				</p>
 				{#each questions[questionIndex].explanation as explanation}
-					<p class={theme.text.small}>
-						{explanation}
-					</p>
+					<p class="text-sm">{explanation}</p>
 				{/each}
 			</div>
 		{/if}
-		<div class="flex-1">
-			{#if $quizStore.setting?.canGoBack}
+		<div class="flex flex-1 justify-end gap-2">
+			{#if $quiz.setting?.canGoBack}
 				<button
 					type="button"
 					aria-label="Previous question"
 					disabled={questionIndex === 0}
-					class={theme.button.base + theme.button.blue}
+					class="box base btn-blue"
 					on:click={() => {
 						if (questionIndex > 0) questionIndex -= 1;
 					}}
@@ -230,21 +206,21 @@
 			<button
 				type="button"
 				aria-label="Next question"
-				class={theme.button.base + theme.button.blue}
+				class="box base btn-blue"
 				disabled={questionIndex === totalQuestions - 1 ||
-					(!$quizStore.setting?.canGoBack && !userAnswers[questionIndex])}
+					(!$quiz.setting?.canGoBack && !userAnswers[questionIndex])}
 				on:click={() => {
 					if (questionIndex < totalQuestions - 1) questionIndex += 1;
 				}}
 			>
 				<i class="ri-arrow-right-s-fill"></i>
 			</button>
-			{#if $quizStore.setting?.canGoBack}
+			{#if $quiz.setting?.canGoBack}
 				<button
 					type="button"
 					aria-label="Submit answer"
-					disabled={$quizStore.step === 3 && questionIndex < totalQuestions - 1}
-					class={theme.button.base + theme.button.green}
+					disabled={$quiz.step === 3 && questionIndex < totalQuestions - 1}
+					class="box base btn-green"
 					on:click={handleResult}
 				>
 					<i class="ri-check-fill"></i>
@@ -253,9 +229,9 @@
 				<button
 					type="button"
 					aria-label="Submit answer"
-					disabled={($quizStore.step === 3 && questionIndex < totalQuestions - 1) ||
+					disabled={($quiz.step === 3 && questionIndex < totalQuestions - 1) ||
 						!userAnswers[questionIndex]}
-					class={theme.button.base + theme.button.green}
+					class="box base btn-green"
 					on:click={handleResult}
 				>
 					<i class="ri-check-fill"></i>
