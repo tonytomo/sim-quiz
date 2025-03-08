@@ -17,6 +17,7 @@
 	let questions: Question[] = [];
 	let userAnswers: string[] = [];
 	let timer = 0;
+	let interval = 0;
 
 	onMount(() => {
 		if ($quiz.step === Step.done) {
@@ -55,11 +56,10 @@
 	}
 
 	function startTimer() {
-		const interval = setInterval(() => {
+		interval = setInterval(() => {
 			timer--;
 			if (timer < 1) {
 				handleResult();
-				clearInterval(interval);
 			}
 		}, 1000);
 	}
@@ -67,6 +67,7 @@
 	function handleResult() {
 		if (!$quiz.setting || !$quiz.question) return;
 
+		clearInterval(interval);
 		isLoading = true;
 		$quiz.step = Step.done;
 		$quiz.result = calculateResult($quiz.setting, $quiz.question, userAnswers, timer);
