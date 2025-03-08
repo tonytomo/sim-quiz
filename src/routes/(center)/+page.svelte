@@ -3,10 +3,18 @@
 	import Header from '$lib/components/header.svelte';
 	import quizStore, { resetQuiz } from '$lib/stores/quiz-store';
 	import theme from '$lib/themes/theme';
+	import { onMount } from 'svelte';
 
 	let countdown = 4;
 	let refInput: HTMLInputElement | null = null;
 	const instruction = ['Upload a quiz file', 'Set the quiz', 'Start the quiz'];
+
+	onMount(() => {
+		if ($quizStore.step > 2) {
+			resetQuiz();
+			goto('/');
+		}
+	});
 
 	function handleChooseFile() {
 		if (refInput) refInput.click();

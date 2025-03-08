@@ -3,6 +3,7 @@
 	import Header from '$lib/components/header.svelte';
 	import quizStore, { resetQuiz } from '$lib/stores/quiz-store';
 	import theme from '$lib/themes/theme';
+	import { on } from 'svelte/events';
 
 	function handleHome() {
 		resetQuiz();
@@ -30,6 +31,13 @@
 </main>
 
 <footer class={theme.container.bottom + 'flex-row justify-end p-4'}>
+	<button
+		aria-label="Review Quiz"
+		class={theme.button.base + theme.button.green}
+		on:click={() => goto('/quiz')}
+	>
+		<i class="ri-bookmark-fill"></i>
+	</button>
 	<button
 		aria-label="Retry Quiz"
 		class={theme.button.base + theme.button.blue}

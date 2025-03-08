@@ -4,6 +4,7 @@
 	import quizStore, { resetQuiz } from '$lib/stores/quiz-store';
 	import theme from '$lib/themes/theme';
 	import type { Question } from '$lib/types/quiz-question';
+	import { calculateResult } from '$lib/utils/calculator';
 	import { formatTime } from '$lib/utils/formater';
 	import { onMount } from 'svelte';
 
@@ -18,26 +19,29 @@
 
 	onMount(() => {
 		timer = 0;
-		if ($quizStore.step !== 3) {
-			resetQuiz();
-			goto('/');
-		} else {
+		if ($quizStore.step === 4) {
+			isLoading = false;
+			if ($quizStore.question && $quizStore.setting && $quizStore.result) {
+				questions = $quizStore.question.lists;
+				totalQuestions = questions.length;
+				userAnswers = $quizStore.result.answers;
+			}
+		} else if ($quizStore.step === 3) {
 			isLoading = false;
 			if ($quizStore.question && $quizStore.setting) {
-				if ($quizStore.setting.isRandom) {
-					questions = $quizStore.question.lists.sort(() => Math.random() - 0.5);
-				} else {
-					questions = $quizStore.question.lists;
-				}
+				questions = $quizStore.question.lists;
 				totalQuestions = questions.length;
 				timer = $quizStore.setting.timePerQuestion * totalQuestions;
 				startTimer();
 			}
+		} else {
+			resetQuiz();
+			goto('/');
 		}
 	});
 
 	$: {
-		if ($quizStore.step === 3 && $quizStore.question) {
+		if ($quizStore.question && $quizStore.step) {
 			refText = $quizStore.question.lists[questionIndex].refIndex;
 
 			const activeQuestion = document.querySelector('.bg-blue-400');
@@ -62,7 +66,15 @@
 	}
 
 	function handleResult() {
+		if (!$quizStore.setting || !$quizStore.question) return;
+
 		$quizStore.step = 4;
+		$quizStore.result = calculateResult(
+			$quizStore.setting,
+			$quizStore.question,
+			userAnswers,
+			timer
+		);
 		goto('/result');
 	}
 
@@ -125,14 +137,16 @@
 		</header>
 	{/if}
 	<main class={theme.container.block}>
-		<section class="flex justify-end">
-			<p class={timer <= 30 ? theme.text.timerRed : theme.text.timer}>
-				{#if timer <= 30}
-					<i class="ri-timer-fill animate-pulse"></i>
-				{/if}
-				Time left: {formatTime(timer)}
-			</p>
-		</section>
+		{#if $quizStore.step === 3}
+			<section class="flex justify-end">
+				<p class={timer <= 30 ? theme.text.timerRed : theme.text.timer}>
+					{#if timer <= 30}
+						<i class="ri-timer-fill animate-pulse"></i>
+					{/if}
+					Time left: {formatTime(timer)}
+				</p>
+			</section>
+		{/if}
 		{#each $quizStore.question.refs[refText].paragraphs as paragraph}
 			<p class={theme.text.paragraph}>
 				{paragraph}
@@ -148,6 +162,7 @@
 						type="radio"
 						name="option"
 						value={option}
+						disabled={$quizStore.step === 4}
 						hidden
 						checked={userAnswers[questionIndex] === option}
 						bind:this={refInput}

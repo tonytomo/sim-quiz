@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import Header from '$lib/components/header.svelte';
-	import quizStore from '$lib/stores/quiz-store';
+	import quizStore, { resetQuiz } from '$lib/stores/quiz-store';
 	import theme from '$lib/themes/theme';
 	import { convertBytes } from '$lib/utils/converter';
 	import { parseQuizQuestions, parseQuizSettings } from '$lib/utils/parser';
@@ -13,12 +13,19 @@
 	let totalQuestions = 0;
 
 	onMount(() => {
-		if ($quizStore.file) {
+		if ($quizStore.step > 2) {
+			resetQuiz();
+			goto('/');
+		} else if ($quizStore.file) {
 			isLoading = false;
 			isLocked = $quizStore.file.content.includes('Locked');
 			if (!isLocked) {
 				$quizStore.setting = parseQuizSettings($quizStore.file.content);
 				$quizStore.question = parseQuizQuestions($quizStore.file.content);
+
+				if ($quizStore.setting.isRandom) {
+					$quizStore.question.lists.sort(() => Math.random() - 0.5);
+				}
 
 				totalQuestions = Math.min(
 					$quizStore.setting.maxQuestions,
