@@ -20,7 +20,7 @@ const theme = {
 		block: 'container mx-auto p-4 select-none ',
 		flex: 'container mx-auto flex flex-row items-center justify-center gap-0 md:gap-4 ',
 		box: 'h-10 w-10 cursor-pointer rounded-2xl text-2xl shadow-md hover:shadow-sm active:shadow-xs active:scale-90 duration-200 ',
-		number: 'flex flex-row items-center justify-start gap-4 select-none ',
+		number: 'flex flex-row items-center justify-start gap-2 select-none ',
 		answer: 'mt-4 flex flex-col items-start justify-center gap-2 '
 	},
 	icon: {

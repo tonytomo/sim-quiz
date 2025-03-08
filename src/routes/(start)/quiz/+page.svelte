@@ -122,6 +122,10 @@
 							<div class={theme.icon.box + 'bg-blue-400 dark:bg-blue-900'}>
 								{index + 1}
 							</div>
+						{:else if $quizStore.step === 4 && userAnswers[index] && userAnswers[index] !== questions[index].answer}
+							<div class={theme.icon.box + 'bg-red-400 dark:bg-red-900'}>
+								{index + 1}
+							</div>
 						{:else if userAnswers[index]}
 							<div class={theme.icon.box + 'bg-green-400 dark:bg-green-900'}>
 								{index + 1}
@@ -138,7 +142,8 @@
 	{/if}
 	<main class={theme.container.block}>
 		{#if $quizStore.step === 3}
-			<section class="flex justify-end">
+			<section class="flex justify-between">
+				<p class={theme.text.bold}>{questionIndex + 1}/{totalQuestions}</p>
 				<p class={timer <= 30 ? theme.text.timerRed : theme.text.timer}>
 					{#if timer <= 30}
 						<i class="ri-timer-fill animate-pulse"></i>
@@ -147,74 +152,115 @@
 				</p>
 			</section>
 		{/if}
-		{#each $quizStore.question.refs[refText].paragraphs as paragraph}
-			<p class={theme.text.paragraph}>
-				{paragraph}
-			</p>
-		{/each}
-		<p class={theme.text.bold + 'pt-4'}>
-			{questions[questionIndex].question}
-		</p>
-		<section class={theme.container.answer}>
-			{#each questions[questionIndex].options as option}
-				<label class={theme.text.small + theme.input.radio}>
-					<input
-						type="radio"
-						name="option"
-						value={option}
-						disabled={$quizStore.step === 4}
-						hidden
-						checked={userAnswers[questionIndex] === option}
-						bind:this={refInput}
-						on:change={handleChooseAnswer}
-					/>
-					<div
-						class="mr-2 flex h-4 w-4 items-center justify-center rounded-full border border-stone-300 text-2xl dark:border-stone-600"
-					>
-						{#if userAnswers[questionIndex] === option}
-							<i class="ri-close-large-line text-3xl"></i>
-						{/if}
-					</div>
-					<span>{option}</span>
-				</label>
-			{/each}
+		<section class="flex flex-col items-stretch gap-4 md:flex-row">
+			<div class="flex-1">
+				{#each $quizStore.question.refs[refText].paragraphs as paragraph}
+					<p class={theme.text.paragraph}>
+						{paragraph}
+					</p>
+				{/each}
+			</div>
+			<div class="flex-1">
+				<p class={theme.text.bold + 'pt-4'}>
+					{questions[questionIndex].question}
+				</p>
+				<section class={theme.container.answer}>
+					{#each questions[questionIndex].options as option}
+						<label class={theme.text.small + theme.input.radio}>
+							<input
+								type="radio"
+								name="option"
+								value={option}
+								disabled={$quizStore.step === 4}
+								hidden
+								checked={userAnswers[questionIndex] === option}
+								bind:this={refInput}
+								on:change={handleChooseAnswer}
+							/>
+							<div
+								class="relative mr-2 h-4 w-4 rounded-full border border-stone-300 text-2xl dark:border-stone-600"
+							>
+								{#if $quizStore.step === 4 && option === questions[questionIndex].answer}
+									<i class="ri-circle-line absolute top-[-75%] left-[-60%] text-3xl text-green-600"
+									></i>
+								{/if}
+								{#if userAnswers[questionIndex] === option}
+									<i class="ri-close-large-line absolute top-[-75%] left-[-60%] text-3xl"></i>
+								{/if}
+							</div>
+							<span>{option}</span>
+						</label>
+					{/each}
+				</section>
+			</div>
 		</section>
 	</main>
 
-	<footer class={theme.container.block + 'flex justify-end p-4 text-center'}>
-		{#if $quizStore.setting?.canGoBack}
+	<footer
+		class={theme.container.block +
+			'flex flex-col justify-between gap-4 p-4 text-center md:flex-row'}
+	>
+		{#if $quizStore.step === 4}
+			<div class="flex-1 text-left">
+				<p class={theme.text.bold}>
+					<i class="ri-lightbulb-fill text-yellow-500"></i>
+					Explanation:
+				</p>
+				{#each questions[questionIndex].explanation as explanation}
+					<p class={theme.text.small}>
+						{explanation}
+					</p>
+				{/each}
+			</div>
+		{/if}
+		<div class="flex-1">
+			{#if $quizStore.setting?.canGoBack}
+				<button
+					type="button"
+					aria-label="Previous question"
+					disabled={questionIndex === 0}
+					class={theme.button.base + theme.button.blue}
+					on:click={() => {
+						if (questionIndex > 0) questionIndex -= 1;
+					}}
+				>
+					<i class="ri-arrow-left-s-fill"></i>
+				</button>
+			{/if}
 			<button
 				type="button"
-				aria-label="Previous question"
-				disabled={questionIndex === 0}
+				aria-label="Next question"
 				class={theme.button.base + theme.button.blue}
+				disabled={questionIndex === totalQuestions - 1 ||
+					(!$quizStore.setting?.canGoBack && !userAnswers[questionIndex])}
 				on:click={() => {
-					if (questionIndex > 0) questionIndex -= 1;
+					if (questionIndex < totalQuestions - 1) questionIndex += 1;
 				}}
 			>
-				<i class="ri-arrow-left-s-fill"></i>
+				<i class="ri-arrow-right-s-fill"></i>
 			</button>
-		{/if}
-		<button
-			type="button"
-			aria-label="Next question"
-			class={theme.button.base + theme.button.blue}
-			disabled={questionIndex === totalQuestions - 1 ||
-				(!$quizStore.setting?.canGoBack && !userAnswers[questionIndex])}
-			on:click={() => {
-				if (questionIndex < totalQuestions - 1) questionIndex += 1;
-			}}
-		>
-			<i class="ri-arrow-right-s-fill"></i>
-		</button>
-		<button
-			type="button"
-			aria-label="Submit answer"
-			disabled={questionIndex < totalQuestions - 1}
-			class={theme.button.base + theme.button.green}
-			on:click={handleResult}
-		>
-			<i class="ri-check-fill"></i>
-		</button>
+			{#if $quizStore.setting?.canGoBack}
+				<button
+					type="button"
+					aria-label="Submit answer"
+					disabled={$quizStore.step === 3 && questionIndex < totalQuestions - 1}
+					class={theme.button.base + theme.button.green}
+					on:click={handleResult}
+				>
+					<i class="ri-check-fill"></i>
+				</button>
+			{:else}
+				<button
+					type="button"
+					aria-label="Submit answer"
+					disabled={($quizStore.step === 3 && questionIndex < totalQuestions - 1) ||
+						!userAnswers[questionIndex]}
+					class={theme.button.base + theme.button.green}
+					on:click={handleResult}
+				>
+					<i class="ri-check-fill"></i>
+				</button>
+			{/if}
+		</div>
 	</footer>
 {/if}
