@@ -5,3 +5,9 @@ export enum Step {
 	start,
 	done
 }
+
+export enum EncryptionStep {
+	upload,
+	generate,
+	encrypt
+}

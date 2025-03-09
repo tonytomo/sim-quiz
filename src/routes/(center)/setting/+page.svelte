@@ -114,16 +114,16 @@
 	</main>
 
 	<footer class="container-bottom justify-end gap-2">
-		<button aria-label="Back" class="box base btn-slate" on:click={() => window.history.back()}>
+		<button aria-label="Back" class="box btn btn-slate" on:click={() => window.history.back()}>
 			<i class="ri-arrow-go-back-line"></i>
 		</button>
 		{#if isLocked}
 			<input type="file" accept=".txt" hidden bind:this={ref} on:change={handleChangeFile} />
-			<button aria-label="Upload Key" class="box base btn-yellow" on:click={handleClick}>
+			<button aria-label="Upload Key" class="box btn btn-yellow" on:click={handleClick}>
 				<i class="ri-key-line"></i>
 			</button>
 		{:else}
-			<button aria-label="Continue" class="box base btn-green" on:click={handleReady}>
+			<button aria-label="Continue" class="box btn btn-green" on:click={handleReady}>
 				<i class="ri-check-line"></i>
 			</button>
 		{/if}

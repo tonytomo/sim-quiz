@@ -93,7 +93,7 @@
 	<Header />
 	<main class="container-stack">
 		<p class="text-sm">No questions found. Please go back and try again.</p>
-		<button aria-label="Go Back" type="button" class="box base btn-slate" on:click={handleReset}>
+		<button aria-label="Go Back" type="button" class="box btn btn-slate" on:click={handleReset}>
 			<i class="ri-home-fill"></i>
 		</button>
 	</main>
@@ -102,7 +102,7 @@
 		<header class="container-flex-row overflow-x-auto pb-0">
 			<section class="flex w-min gap-2">
 				{#each questions as question, index}
-					<button class="box base" on:click={() => (questionIndex = index)}>
+					<button class="box btn" on:click={() => (questionIndex = index)}>
 						{#if questionIndex === index}
 							<div class="box active">
 								{index + 1}
@@ -196,7 +196,7 @@
 					type="button"
 					aria-label="Previous question"
 					disabled={questionIndex === 0}
-					class="box base btn-blue"
+					class="box btn btn-blue"
 					on:click={() => {
 						if (questionIndex > 0) questionIndex -= 1;
 					}}
@@ -207,7 +207,7 @@
 			<button
 				type="button"
 				aria-label="Next question"
-				class="box base btn-blue"
+				class="box btn btn-blue"
 				disabled={questionIndex === totalQuestions - 1 ||
 					(!$quiz.setting?.canGoBack && !userAnswers[questionIndex])}
 				on:click={() => {
@@ -221,7 +221,7 @@
 					type="button"
 					aria-label="Submit answer"
 					disabled={$quiz.step === 3 && questionIndex < totalQuestions - 1}
-					class="box base btn-green"
+					class="box btn btn-green"
 					on:click={handleResult}
 				>
 					<i class="ri-check-fill"></i>
@@ -232,7 +232,7 @@
 					aria-label="Submit answer"
 					disabled={($quiz.step === 3 && questionIndex < totalQuestions - 1) ||
 						!userAnswers[questionIndex]}
-					class="box base btn-green"
+					class="box btn btn-green"
 					on:click={handleResult}
 				>
 					<i class="ri-check-fill"></i>

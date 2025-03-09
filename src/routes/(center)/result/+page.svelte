@@ -34,14 +34,14 @@
 
 <footer class="container-bottom justify-end gap-2">
 	{#if $quizStore.setting?.canGoBack}
-		<button aria-label="Review Quiz" class="box base btn-green" on:click={() => goto('/quiz')}>
+		<button aria-label="Review Quiz" class="box btn btn-green" on:click={() => goto('/quiz')}>
 			<i class="ri-search-line"></i>
 		</button>
 	{/if}
-	<button aria-label="Retry Quiz" class="box base btn-blue" on:click={handleRedoQuiz}>
+	<button aria-label="Retry Quiz" class="box btn btn-blue" on:click={handleRedoQuiz}>
 		<i class="ri-reset-right-fill"></i>
 	</button>
-	<button aria-label="Home" class="box base btn-slate" on:click={handleHome}>
+	<button aria-label="Home" class="box btn btn-slate" on:click={handleHome}>
 		<i class="ri-home-fill"></i>
 	</button>
 </footer>

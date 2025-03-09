@@ -23,7 +23,7 @@
 		<button
 			disabled={isDisabled}
 			aria-label="Back"
-			class="box base btn-ghost"
+			class="box btn btn-ghost"
 			onclick={() => window.history.back()}
 		>
 			<i class="ri-arrow-go-back-line"></i>
@@ -32,7 +32,7 @@
 		<button
 			disabled={isDisabled}
 			aria-label="Go Home"
-			class="box base btn-ghost"
+			class="box btn btn-ghost"
 			onclick={() => goto('/')}
 		>
 			<i class="ri-home-fill"></i>
@@ -41,7 +41,7 @@
 		<button
 			disabled={isDisabled}
 			aria-label="Reset"
-			class="box base btn-ghost"
+			class="box btn btn-ghost"
 			onclick={handleReset}
 		>
 			<i class="ri-refresh-fill"></i>
@@ -50,7 +50,7 @@
 		<button
 			disabled={isDisabled}
 			aria-label="About"
-			class="box base btn-ghost"
+			class="box btn btn-ghost"
 			onclick={() => goto('/about')}
 		>
 			<i class="ri-information-line"></i>

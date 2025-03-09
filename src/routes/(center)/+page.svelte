@@ -68,7 +68,7 @@
 		<button
 			disabled={countdown < 4}
 			aria-label="Upload Quiz"
-			class="box base btn-blue"
+			class="box btn btn-blue"
 			on:click={handleChooseFile}
 		>
 			<i class="ri-file-paper-2-fill"></i>
@@ -77,7 +77,7 @@
 		<button
 			disabled={$quiz.step < Step.prepare || countdown < 4}
 			aria-label="Settings"
-			class="box base btn-yellow"
+			class="box btn btn-yellow"
 			on:click={() => goto('/setting')}
 		>
 			<i class="ri-equalizer-2-fill"></i>
@@ -86,7 +86,7 @@
 		<button
 			disabled={$quiz.step < Step.ready || countdown < 4}
 			aria-label="Start Quiz"
-			class="box base btn-green"
+			class="box btn btn-green"
 			on:click={handleStartQuiz}
 		>
 			{#if countdown < 4}
@@ -104,7 +104,7 @@
 	<button
 		disabled={countdown < 4}
 		aria-label="Are you a Writer?"
-		class="box base btn-slate"
+		class="box btn btn-slate"
 		on:click={() => goto('/writer')}
 	>
 		<i class="ri-quill-pen-fill"></i>
