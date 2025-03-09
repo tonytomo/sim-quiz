@@ -4,7 +4,7 @@
 	import Header from '$lib/components/header.svelte';
 </script>
 
-<Header isBack />
+<Header isHome />
 
 <main class="container-blog my-20 gap-4 scroll-smooth">
 	<section class="container-blog gap-10 p-4">
@@ -30,7 +30,7 @@
 				<li><a href="#example">Example</a></li>
 				<li><a href="#how-to-use-the-quiz">How to use the quiz?</a></li>
 				<li><a href="#start-writing-your-own-quizzes">Start writing your own quizzes!</a></li>
-				<li><a href="#securing-the-quiz-file">Securing the quiz file</a></li>
+				<li><a href="#encrypting-the-quiz-file">Encrypting the quiz file</a></li>
 			</ul>
 		</div>
 	</section>
@@ -224,7 +224,7 @@
 
 	<hr />
 
-	<section class="container-blog gap-10 p-4">
+	<section class="container-blog gap-10 p-4" id="encrypting-the-quiz-file">
 		<h1 class="big-title">Encrypting the quiz file</h1>
 		<p class="subtitle">
 			Securing the quiz file is important if you want to prevent others from reading the content of
@@ -232,7 +232,7 @@
 		</p>
 	</section>
 
-	<section class="container-blog gap-2 p-4" id="securing-the-quiz-file">
+	<section class="container-blog gap-2 p-4">
 		<h2 class="title">Securing the quiz file</h2>
 		<p class="subtitle">
 			You can secure the quiz file by encrypting it using AES encryption. This will prevent others

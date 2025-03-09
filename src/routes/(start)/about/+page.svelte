@@ -2,7 +2,7 @@
 	import Header from '$lib/components/header.svelte';
 </script>
 
-<Header isBack />
+<Header isHome />
 
 <main class="container-blog my-20 gap-4 scroll-smooth">
 	<section class="container-blog gap-10 p-4">
@@ -34,9 +34,9 @@
 					<a href="#how-to-use-simquiz-for-competition">How to use SimQuiz for competition?</a>
 				</li>
 				<li>
-					<a href="#thoughts-about-buying-and-selling-quiz-files"
-						>Thoughts about buying and selling quiz files</a
-					>
+					<a href="#thoughts-about-buying-and-selling-quiz-files">
+						Thoughts about buying and selling quiz files
+					</a>
 				</li>
 			</ul>
 		</div>
@@ -148,8 +148,8 @@
 		</p>
 	</section>
 
-	<section class="container-blog gap-2 p-4" id="thoughts-about-buy-and-sell-quiz-files">
-		<h2 class="title">Thoughts about buy and sell quiz files</h2>
+	<section class="container-blog gap-2 p-4" id="thoughts-about-buying-and-selling-quiz-files">
+		<h2 class="title">Thoughts about buying and selling quiz files</h2>
 		<p class="subtitle">
 			Buying and selling quiz files is a good way to share knowledge and make money. You can create
 			quizzes on any topic you like and sell them to others who are interested in the topic. You can
