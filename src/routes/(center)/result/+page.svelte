@@ -21,7 +21,7 @@
 <Header />
 
 <main class="container-stack gap-2">
-	<h1 class="title">{score}%</h1>
+	<h1 class="big-title">{score}%</h1>
 	<p class="subtitle">Your Result</p>
 	<div class="container-color">
 		<p class="text-sm">Time Spent: {timeSpent} seconds</p>

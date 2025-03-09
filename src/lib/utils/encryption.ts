@@ -70,14 +70,7 @@ async function createAndDownloadFile(
 	content: string | ArrayBuffer,
 	type: string
 ) {
-	let blob: Blob;
-
-	if (typeof content === 'string') {
-		blob = new Blob([content], { type: type });
-	} else {
-		blob = new Blob([content], { type: type });
-	}
-
+	const blob = new Blob([content], { type: type });
 	const url = URL.createObjectURL(blob);
 	const a = document.createElement('a');
 	a.href = url;

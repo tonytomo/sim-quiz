@@ -6,6 +6,7 @@
 	let ref: HTMLInputElement | null = null;
 	let key: CryptoKey;
 	let file: File | null = null;
+	let filename = 'default';
 	let step = EncryptionStep.upload;
 
 	function handleUploadFile() {
@@ -20,16 +21,17 @@
 				return;
 			}
 			step = EncryptionStep.generate;
+			filename = file.name.split('.').shift() || 'default';
 		}
 	}
 
-	async function handleGenerateKey(filename: string) {
+	async function handleGenerateKey() {
 		key = await generateKey();
 		await exportKey(key, `${filename}_key.json`);
 		step = EncryptionStep.encrypt;
 	}
 
-	async function handleEncryptFile(filename: string) {
+	async function handleEncryptFile() {
 		if (file) {
 			const content = await file.text();
 			await encryptAndDownload(content, key, `${filename}.enc`);
@@ -49,7 +51,10 @@
 		<br />
 		File: <span class="text-blue-500">{file?.name || 'No file selected'}</span> <br />
 		Size: <span class="text-blue-500">{file?.size ? convertBytes(file.size) : 'N/A'}</span> <br />
-		Key: <span class="text-yellow-500">{key ? 'Generated' : 'Not generated'}</span>
+		Key:
+		<span class={key ? 'text-green-500' : 'text-yellow-500'}
+			>{key ? 'Generated' : 'Not generated'}</span
+		>
 	</p>
 	<div class="container-hstack gap-2 text-slate-400">
 		<input type="file" accept=".txt" hidden bind:this={ref} on:change={handleUploadFile} />
@@ -60,7 +65,7 @@
 		<button
 			disabled={step < EncryptionStep.generate}
 			aria-label="Generate Key"
-			on:click={() => handleGenerateKey('encryption_key')}
+			on:click={() => handleGenerateKey()}
 			class="box btn btn-yellow"
 		>
 			<i class="ri-key-fill"></i>
@@ -69,7 +74,7 @@
 		<button
 			disabled={step < EncryptionStep.encrypt}
 			aria-label="Encrypt File"
-			on:click={() => handleEncryptFile('encrypted')}
+			on:click={() => handleEncryptFile()}
 			class="box btn btn-green"
 		>
 			<i class="ri-lock-fill"></i>

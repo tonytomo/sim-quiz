@@ -4,7 +4,7 @@
 Utility Classes
 */
 ::-webkit-scrollbar {
-	@apply invisible;
+	@apply invisible h-0 w-0;
 }
 ::-webkit-scrollbar-thumb {
 	@apply invisible;

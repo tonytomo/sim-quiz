@@ -7,12 +7,14 @@
 	import { parseQuizQuestions, parseQuizSettings } from '$lib/utils/parser';
 	import { Step } from '$lib/types/quiz-step';
 	import type { Question } from '$lib/types/quiz-question';
+	import { decryptContent, encryptContent, importKey } from '$lib/utils/encryption';
 
 	let ref: HTMLInputElement | null = null;
 	let isLoading = true;
 	let isLocked = true;
 	let totalQuestions = 0;
 	let questions: Question[] = [];
+	let isWrongKey = false;
 
 	onMount(() => {
 		if ($quiz.step > Step.ready) {
@@ -22,8 +24,8 @@
 		}
 		if ($quiz.file) {
 			isLoading = false;
-			isLocked = $quiz.file.content.includes('Locked');
-			prepareQuiz($quiz.file.content);
+			isLocked = $quiz.file.filename.split('.').pop() === 'enc';
+			if (!isLocked) prepareQuiz($quiz.file.content as string);
 		} else {
 			isLoading = false;
 			goto('/');
@@ -49,28 +51,30 @@
 	function handleChangeFile() {
 		const file = ref?.files?.[0];
 		if (file) {
-			if (file.type !== 'text/plain') {
-				alert('Invalid file format. Please upload a .txt file.');
+			if (file.type !== 'application/json') {
+				alert('Invalid file format. Please upload a .json key file.');
 				return;
 			}
-			if (file.size > 1024) {
-				alert('File size exceeds 1kB. Please upload a smaller file.');
+			if (file.size > 1024 * 1024) {
+				alert('File size exceeds 1MB. Please upload a smaller file.');
 				return;
 			}
 			const reader = new FileReader();
-			reader.onload = function () {
+			reader.onload = async function () {
 				const content = reader.result as string;
+				const key = JSON.parse(content);
+				const quizKey = await importKey(key);
+				const decryptedText = await decryptContent(quizKey, $quiz.file?.content as ArrayBuffer);
+
+				if (!decryptedText) {
+					isLocked = true;
+					isWrongKey = true;
+					return;
+				}
+
+				isWrongKey = false;
 				isLocked = false;
-				console.log(content);
-
-				/**
-				@import { decrypt } from '$lib/utils/encryptor';
-
-				const encryptedText = $quiz.file.content;
-				const decryptedText = decrypt(encryptedText, content);
-
-				prepareQuiz(decryptedText.substring(6));
-				*/
+				prepareQuiz(decryptedText);
 			};
 			reader.readAsText(file);
 		}
@@ -98,6 +102,9 @@
 				Status: {isLocked ? 'Locked' : 'Unlocked'}
 			</h3>
 			<section class="container-center">
+				{#if isWrongKey}
+					<p class="timer-red">Wrong key. Upload the correct key to unlock the quiz.</p>
+				{/if}
 				{#if !isLocked && $quiz.setting && $quiz.question}
 					<ul class="container-color text-sm">
 						<li>Question: {totalQuestions}</li>
@@ -118,7 +125,7 @@
 			<i class="ri-arrow-go-back-line"></i>
 		</button>
 		{#if isLocked}
-			<input type="file" accept=".txt" hidden bind:this={ref} on:change={handleChangeFile} />
+			<input type="file" accept=".json" hidden bind:this={ref} on:change={handleChangeFile} />
 			<button aria-label="Upload Key" class="box btn btn-yellow" on:click={handleClick}>
 				<i class="ri-key-line"></i>
 			</button>

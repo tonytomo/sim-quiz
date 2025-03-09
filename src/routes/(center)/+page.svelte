@@ -23,8 +23,8 @@
 	function handleChangeFile() {
 		const file = refInput?.files?.[0];
 		if (file) {
-			if (file.type !== 'text/plain') {
-				alert('Invalid file format. Please upload a .txt file.');
+			if (file.type !== 'text/plain' && file.name.split('.').pop() !== 'enc') {
+				alert('Invalid file format. Please upload a .txt or .enc file.');
 				return;
 			}
 			if (file.size > 1024 * 1024) {
@@ -32,18 +32,33 @@
 				return;
 			}
 			const reader = new FileReader();
-			reader.onload = function () {
-				const content = reader.result as string;
-				resetQuiz();
-				$quiz.step = Step.prepare;
-				$quiz.file = {
-					file,
-					filename: file.name,
-					size: file.size,
-					content
+			if (file.name.split('.').pop() === 'enc') {
+				reader.onload = function () {
+					const content = reader.result as ArrayBuffer;
+					resetQuiz();
+					$quiz.step = Step.prepare;
+					$quiz.file = {
+						file,
+						filename: file.name,
+						size: file.size,
+						content
+					};
 				};
-			};
-			reader.readAsText(file);
+				reader.readAsArrayBuffer(file);
+			} else {
+				reader.onload = function () {
+					const content = reader.result as string;
+					resetQuiz();
+					$quiz.step = Step.prepare;
+					$quiz.file = {
+						file,
+						filename: file.name,
+						size: file.size,
+						content
+					};
+				};
+				reader.readAsText(file);
+			}
 		}
 	}
 
@@ -64,7 +79,13 @@
 
 <main class="container-stack">
 	<section class="container-hstack gap-2 text-slate-400">
-		<input type="file" accept=".txt" hidden bind:this={refInput} on:change={handleChangeFile} />
+		<input
+			type="file"
+			accept=".txt,.enc"
+			hidden
+			bind:this={refInput}
+			on:change={handleChangeFile}
+		/>
 		<button
 			disabled={countdown < 4}
 			aria-label="Upload Quiz"
