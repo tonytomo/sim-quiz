@@ -65,9 +65,8 @@
 			<b>".json"</b> extension.
 		</p>
 		<p class="container-color mt-2 text-sm">
-			<b>Remember!</b><br />
-			Quiz File = ".txt" or ".enc"<br />
-			Key File = ".json"
+			We have example quiz files that you can download and try. You can download the example quiz
+			files by clicking <b><a target="_blank" href="/example-download">here</a></b>.
 		</p>
 	</section>
 
@@ -76,9 +75,9 @@
 		<p class="subtitle">
 			You can create a quiz by writing a text file with the extension ".txt". The file should have a
 			list of settings, a text, and a list of questions. The settings are the maximum number of
-			questions, the time per question, if the user can go back, and if the questions are random. <br
-			/>
-			<br />
+			questions, the time per question, if the user can go back, and if the questions are random.
+		</p>
+		<p class="container-color mt-2 text-sm">
 			You can see a more detailed guide on how to write a quiz by clicking
 			<b><a href="/writer">here</a></b>.
 		</p>
