@@ -1,5 +1,8 @@
 <script lang="ts">
 	import Header from '$lib/components/header.svelte';
+
+	const downloadUrl =
+		'https://drive.google.com/uc?export=download&id=10pLNjxNd9Y1hZYchlFBF7x_HqY9FtpAT';
 </script>
 
 <Header isHome />
@@ -75,7 +78,7 @@
 		</p>
 		<p class="container-color mt-2 text-sm">
 			We have example quiz files that you can download and try. You can download the example quiz
-			files by clicking <b><a target="_blank" href="/example-download">here</a></b>.
+			files by clicking <b><a href={downloadUrl}>here</a></b>.
 		</p>
 	</section>
 
