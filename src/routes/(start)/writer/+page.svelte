@@ -4,7 +4,7 @@
 	import Header from '$lib/components/header.svelte';
 </script>
 
-<Header />
+<Header isBack />
 
 <main class="container-blog my-20 gap-4 scroll-smooth">
 	<section class="container-blog gap-10 p-4">

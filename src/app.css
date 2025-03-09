@@ -39,13 +39,13 @@ Text Related Styles
 	@apply text-lg font-semibold;
 }
 .subtitle {
-	@apply text-sm text-slate-400;
+	@apply text-sm text-slate-500;
 }
 .paragraph {
 	@apply my-2 text-justify indent-8 text-sm;
 }
 .timer-gray {
-	@apply rounded-md border border-slate-400 bg-slate-200 px-2 py-1 text-end text-sm dark:border-slate-400 dark:bg-slate-700;
+	@apply rounded-md border border-slate-500 bg-slate-200 px-2 py-1 text-end text-sm dark:border-slate-500 dark:bg-slate-700;
 }
 .timer-red {
 	@apply rounded-md border border-red-300 bg-red-100 px-2 py-1 text-end text-sm dark:border-red-800 dark:bg-red-950;
@@ -97,7 +97,7 @@ Container Related Styles
 	@apply fixed right-0 bottom-0 left-0 z-50 container mx-auto flex p-4 select-none;
 }
 .container-color {
-	@apply rounded-2xl border border-slate-400 bg-slate-100 p-4 dark:border-slate-600 dark:bg-slate-900;
+	@apply rounded-2xl border border-slate-500 bg-slate-100 p-4 dark:border-slate-600 dark:bg-slate-900;
 }
 
 /*
@@ -110,7 +110,7 @@ Button Related Styles
 	@apply text-2xl duration-200 hover:scale-95 active:scale-90 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400 dark:disabled:bg-slate-900 dark:disabled:text-slate-600;
 }
 .btn-ghost {
-	@apply bg-transparent text-slate-400 dark:text-slate-400;
+	@apply bg-transparent text-slate-500 dark:text-slate-500;
 }
 .btn-blue {
 	@apply bg-blue-500 text-white dark:bg-blue-600;

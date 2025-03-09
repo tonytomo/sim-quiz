@@ -85,7 +85,7 @@
 </script>
 
 {#if isLoading}
-	<Header />
+	<Header isDisabled />
 	<main class="container-center h-[100svh]">
 		<i class="ri-quill-pen-line animate-ping text-4xl"></i>
 	</main>

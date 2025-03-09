@@ -86,7 +86,7 @@
 	}
 </script>
 
-<Header />
+<Header isHome />
 
 {#if isLoading}
 	<main class="container-center">
