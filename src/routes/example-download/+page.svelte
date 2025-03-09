@@ -6,3 +6,5 @@
 
 	onMount(() => (window.location.href = downloadUrl));
 </script>
+
+<h1 class="title">Downloading...</h1>
