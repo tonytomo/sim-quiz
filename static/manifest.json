@@ -1,10 +1,10 @@
 {
 	"name": "SimQuiz PWA",
 	"short_name": "SimQuiz",
-	"start_url": "/",
+	"start_url": "/sim-quiz/",
 	"display": "standalone",
-	"background_color": "#3b82f6",
-	"theme_color": "#f8fafc",
+	"background_color": "#1e293b",
+	"theme_color": "#0f172a",
 	"description": "Quiz Simulation Progressive Web App",
 	"icons": [
 		{
