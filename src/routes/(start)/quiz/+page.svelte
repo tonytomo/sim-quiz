@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { browser } from '$app/environment';
 	import { onMount } from 'svelte';
 	import Header from '$lib/components/header.svelte';
 	import quiz, { resetQuiz } from '$lib/stores/quiz-store';
@@ -41,11 +42,17 @@
 			resetQuiz();
 			goto('/');
 		}
+
+		window.onbeforeunload = () => {
+			if ($quiz.step === 3) return 'Are you sure you want to leave?';
+		};
 	});
 
 	$: {
-		const active = document.querySelector('.active');
-		if (active) active.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+		if (browser) {
+			const active = document.querySelector('.active');
+			if (active) active.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+		}
 		if ($quiz.question) refText = $quiz.question.lists[questionIndex].refIndex;
 	}
 
@@ -78,10 +85,6 @@
 		resetQuiz();
 		goto('/');
 	}
-
-	window.onbeforeunload = () => {
-		if ($quiz.step === 3) return 'Are you sure you want to leave?';
-	};
 </script>
 
 {#if isLoading}

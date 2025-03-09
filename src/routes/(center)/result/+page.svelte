@@ -1,11 +1,26 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { onMount } from 'svelte';
 	import Header from '$lib/components/header.svelte';
 	import quizStore, { resetQuiz } from '$lib/stores/quiz-store';
-	import type { QuizResult } from '$lib/types/quiz-result';
 
-	const { score, timeSpent, corrects, wrongs, unanswered, doubts } =
-		$quizStore.result as QuizResult;
+	let score = 0;
+	let timeSpent = 0;
+	let corrects: number[] = [];
+	let wrongs: number[] = [];
+	let unanswered: number[] = [];
+	let doubts: number[] = [];
+
+	onMount(() => {
+		if ($quizStore.result) {
+			score = $quizStore.result.score || 0;
+			timeSpent = $quizStore.result.timeSpent || 0;
+			corrects = $quizStore.result.corrects || [];
+			wrongs = $quizStore.result.wrongs || [];
+			unanswered = $quizStore.result.unanswered || [];
+			doubts = $quizStore.result.doubts || [];
+		}
+	});
 
 	function handleHome() {
 		resetQuiz();
