@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import Header from '$lib/components/header.svelte';
 
 	const downloadUrl =
@@ -91,7 +92,7 @@
 		</p>
 		<p class="container-color mt-2 text-sm">
 			You can see a more detailed guide on how to write a quiz by clicking
-			<b><a href="/writer">here</a></b>.
+			<b><a href={`${base}/writer`}>here</a></b>.
 		</p>
 	</section>
 
