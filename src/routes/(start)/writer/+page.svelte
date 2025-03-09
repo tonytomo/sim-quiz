@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { base } from '$app/paths';
 	import Aes from '$lib/components/aes.svelte';
 	import Header from '$lib/components/header.svelte';
 </script>
@@ -248,7 +249,7 @@
 </main>
 
 <footer class="container-bottom justify-end gap-2">
-	<button aria-label="Back" class="box btn btn-slate" on:click={() => goto('/')}>
+	<button aria-label="Back" class="box btn btn-slate" on:click={() => goto(base)}>
 		<i class="ri-arrow-left-line"></i>
 	</button>
 	<button

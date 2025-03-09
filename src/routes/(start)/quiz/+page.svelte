@@ -8,6 +8,7 @@
 	import { Step } from '$lib/types/quiz-step';
 	import { calculateResult } from '$lib/utils/calculator';
 	import { formatTime } from '$lib/utils/formater';
+	import { base } from '$app/paths';
 
 	let ref: HTMLInputElement | null = null;
 	let refText = -1;
@@ -40,7 +41,7 @@
 			startTimer();
 		} else {
 			resetQuiz();
-			goto('/');
+			goto(base);
 		}
 
 		window.onbeforeunload = () => {
@@ -78,12 +79,12 @@
 		isLoading = true;
 		$quiz.step = Step.done;
 		$quiz.result = calculateResult($quiz.setting, $quiz.question, userAnswers, timer);
-		goto('/result');
+		goto(base + '/result');
 	}
 
 	function handleReset() {
 		resetQuiz();
-		goto('/');
+		goto(base);
 	}
 </script>
 

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { base } from '$app/paths';
 	import { resetQuiz } from '$lib/stores/quiz-store';
 
 	let {
@@ -11,7 +12,7 @@
 
 	function handleReset() {
 		resetQuiz();
-		goto('/');
+		goto(base);
 	}
 </script>
 
@@ -33,7 +34,7 @@
 			disabled={isDisabled}
 			aria-label="Go Home"
 			class="box btn btn-ghost"
-			onclick={() => goto('/')}
+			onclick={() => goto(base)}
 		>
 			<i class="ri-home-fill"></i>
 		</button>
@@ -51,7 +52,7 @@
 			disabled={isDisabled}
 			aria-label="About"
 			class="box btn btn-ghost"
-			onclick={() => goto('/about')}
+			onclick={() => goto(base + '/about')}
 		>
 			<i class="ri-information-line"></i>
 		</button>

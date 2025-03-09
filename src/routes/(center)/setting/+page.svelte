@@ -8,6 +8,7 @@
 	import { Step } from '$lib/types/quiz-step';
 	import type { Question } from '$lib/types/quiz-question';
 	import { decryptContent, encryptContent, importKey } from '$lib/utils/encryption';
+	import { base } from '$app/paths';
 
 	let ref: HTMLInputElement | null = null;
 	let isLoading = true;
@@ -19,7 +20,7 @@
 	onMount(() => {
 		if ($quiz.step > Step.ready) {
 			resetQuiz();
-			goto('/');
+			goto(base);
 			return;
 		}
 		if ($quiz.file) {
@@ -28,7 +29,7 @@
 			if (!isLocked) prepareQuiz($quiz.file.content as string);
 		} else {
 			isLoading = false;
-			goto('/');
+			goto(base);
 		}
 	});
 
@@ -87,7 +88,7 @@
 
 	function handleReady() {
 		$quiz.step = Step.ready;
-		goto('/');
+		goto(base);
 	}
 </script>
 

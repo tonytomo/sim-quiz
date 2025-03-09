@@ -4,6 +4,7 @@
 	import Header from '$lib/components/header.svelte';
 	import quiz, { resetQuiz } from '$lib/stores/quiz-store';
 	import { Step } from '$lib/types/quiz-step';
+	import { base } from '$app/paths';
 
 	const instruction = ['Upload a quiz file', 'Prepare the quiz', 'Start the quiz'];
 	let countdown = 4;
@@ -12,7 +13,7 @@
 	onMount(() => {
 		if ($quiz.step > Step.ready) {
 			resetQuiz();
-			goto('/');
+			goto(base);
 		}
 	});
 
@@ -68,7 +69,7 @@
 			countdown--;
 			if (countdown < 1) {
 				$quiz.step = Step.start;
-				goto('/quiz');
+				goto(base + '/quiz');
 				clearInterval(interval);
 			}
 		}, 1000);
@@ -99,7 +100,7 @@
 			disabled={$quiz.step < Step.prepare || countdown < 4}
 			aria-label="Settings"
 			class="box btn btn-yellow"
-			on:click={() => goto('/setting')}
+			on:click={() => goto(base + '/setting')}
 		>
 			<i class="ri-equalizer-2-fill"></i>
 		</button>
@@ -126,7 +127,7 @@
 		disabled={countdown < 4}
 		aria-label="Are you a Writer?"
 		class="box btn btn-slate"
-		on:click={() => goto('/writer')}
+		on:click={() => goto(base + '/writer')}
 	>
 		<i class="ri-quill-pen-fill"></i>
 	</button>

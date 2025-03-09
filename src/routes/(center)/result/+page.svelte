@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 	import Header from '$lib/components/header.svelte';
 	import quizStore, { resetQuiz } from '$lib/stores/quiz-store';
+	import { base } from '$app/paths';
 
 	let score = 0;
 	let timeSpent = 0;
@@ -24,12 +25,12 @@
 
 	function handleHome() {
 		resetQuiz();
-		goto('/');
+		goto(base);
 	}
 
 	function handleRedoQuiz() {
 		$quizStore.step = 3;
-		goto('/quiz');
+		goto(base + '/quiz');
 	}
 </script>
 
@@ -49,7 +50,7 @@
 
 <footer class="container-bottom justify-end gap-2">
 	{#if $quizStore.setting?.canGoBack}
-		<button aria-label="Review Quiz" class="box btn btn-green" on:click={() => goto('/quiz')}>
+		<button aria-label="Review Quiz" class="box btn btn-green" on:click={() => goto(base + '/quiz')}>
 			<i class="ri-search-line"></i>
 		</button>
 	{/if}
