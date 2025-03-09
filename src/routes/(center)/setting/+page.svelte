@@ -14,7 +14,7 @@
 	let isLocked = true;
 	let totalQuestions = 0;
 	let questions: Question[] = [];
-	let isWrongKey = false;
+	let error = '';
 
 	onMount(() => {
 		if ($quiz.step > Step.ready) {
@@ -37,6 +37,11 @@
 
 		$quiz.setting = parseQuizSettings(content);
 		$quiz.question = parseQuizQuestions(content);
+
+		if (isNaN($quiz.setting.maxQuestions) || isNaN($quiz.setting.timePerQuestion)) {
+			error = 'Invalid quiz settings. Please upload a valid quiz file.';
+			isLocked = true;
+		}
 
 		questions = $quiz.question.lists;
 		if ($quiz.setting.isRandom) questions.sort(() => Math.random() - 0.5);
@@ -68,11 +73,11 @@
 
 				if (!decryptedText) {
 					isLocked = true;
-					isWrongKey = true;
+					error = 'Wrong key. Upload the correct key to unlock the quiz.';
 					return;
 				}
 
-				isWrongKey = false;
+				error = '';
 				isLocked = false;
 				prepareQuiz(decryptedText);
 			};
@@ -102,8 +107,8 @@
 				Status: {isLocked ? 'Locked' : 'Unlocked'}
 			</h3>
 			<section class="container-center">
-				{#if isWrongKey}
-					<p class="timer-red">Wrong key. Upload the correct key to unlock the quiz.</p>
+				{#if error}
+					<p class="timer-red">{error}</p>
 				{/if}
 				{#if !isLocked && $quiz.setting && $quiz.question}
 					<ul class="container-color text-sm">

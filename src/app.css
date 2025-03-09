@@ -99,6 +99,9 @@ Container Related Styles
 .container-color {
 	@apply rounded-2xl border border-slate-500 bg-slate-100 p-4 dark:border-slate-600 dark:bg-slate-900;
 }
+.container-green {
+	@apply rounded-2xl border border-green-500 bg-green-100 p-4 dark:border-green-800 dark:bg-green-950;
+}
 
 /*
 Button Related Styles
@@ -129,7 +132,7 @@ Button Related Styles
 Input Related Styles
 */
 .ip-radio {
-	@apply flex flex-row items-center gap-2;
+	@apply flex cursor-pointer flex-row items-center gap-2 disabled:cursor-not-allowed;
 }
 .radio-circle {
 	@apply relative mr-2 h-4 w-4 rounded-full border border-stone-300 text-2xl dark:border-stone-600;

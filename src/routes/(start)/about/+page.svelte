@@ -50,6 +50,15 @@
 			specific topic. It is also can be used for fun, learning, education, business, and simple
 			competition.
 		</p>
+		<p class="container-green mt-2 text-sm">
+			You can use SimQuiz for <b>FREE</b>. There is no need to create an account or to pay for
+			anything. You can start using SimQuiz right away by opening a quiz file and answering the
+			questions.<br />
+			<br />
+			This app is also working on <b>CLIENT SIDE</b>. Which mean all the data you input will not be
+			saved on the server. You can use this app offline as long as you have the quiz file and the
+			key to open it.
+		</p>
 	</section>
 
 	<section class="container-blog gap-2 p-4" id="how-to-use-simquiz">
