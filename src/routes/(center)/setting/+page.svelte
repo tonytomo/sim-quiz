@@ -44,6 +44,9 @@
 			isLocked = true;
 		}
 
+		const maxQuestions = $quiz.setting.maxQuestions;
+		$quiz.question.lists = $quiz.question.lists.slice(0, maxQuestions);
+
 		questions = $quiz.question.lists;
 		if ($quiz.setting.isRandom) questions.sort(() => Math.random() - 0.5);
 
