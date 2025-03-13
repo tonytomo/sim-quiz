@@ -113,7 +113,6 @@ export function parseQuizQuestions(quiz: string): QuizQuestion {
 			lists.push(list);
 		}
 	}
-	console.log(lists);
 	return {
 		refs: refs,
 		lists: lists

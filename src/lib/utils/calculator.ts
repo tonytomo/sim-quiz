@@ -21,7 +21,7 @@ export function calculateResult(
 			return;
 		}
 
-		if (answers[index] === question.answer) {
+		if (answers[index].toLowerCase() === question.answer.toLowerCase()) {
 			corrects.push(index);
 		} else {
 			wrongs.push(index);

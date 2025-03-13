@@ -1,11 +1,11 @@
 {
-	"name": "SimQuiz PWA",
+	"name": "SimQuiz",
 	"short_name": "SimQuiz",
 	"start_url": "/sim-quiz/",
 	"display": "standalone",
 	"background_color": "#1e293b",
 	"theme_color": "#0f172a",
-	"description": "Quiz Simulation Progressive Web App",
+	"description": "SimQuiz - Quiz Simulation Progressive Web App. Test your knowledge with this quiz simulation app. You can create your own quizzes and share them with your friends.",
 	"icons": [
 		{
 			"src": "pwa-64x64.png",
