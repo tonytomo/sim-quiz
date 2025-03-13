@@ -13,7 +13,7 @@
 	onMount(() => {
 		if ($quiz.step > Step.ready) {
 			resetQuiz();
-			goto(base);
+			goto(base + '/');
 		}
 	});
 

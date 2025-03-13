@@ -12,7 +12,7 @@
 
 	function handleReset() {
 		resetQuiz();
-		goto(base);
+		goto(base + '/');
 	}
 </script>
 
@@ -34,7 +34,7 @@
 			disabled={isDisabled}
 			aria-label="Go Home"
 			class="box btn btn-ghost"
-			onclick={() => goto(base)}
+			onclick={() => goto(base + '/')}
 		>
 			<i class="ri-home-fill"></i>
 		</button>

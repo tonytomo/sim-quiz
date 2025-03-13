@@ -131,6 +131,9 @@ Button Related Styles
 /*
 Input Related Styles
 */
+.ip-textarea {
+	@apply w-full h-32 p-2 border border-slate-300 dark:border-slate-600 rounded-md text-sm;
+}
 .ip-radio {
 	@apply flex cursor-pointer flex-row items-center gap-2 disabled:cursor-not-allowed;
 }

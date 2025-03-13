@@ -22,5 +22,27 @@
 			"type": "image/png",
 			"sizes": "512x512"
 		}
+	],
+	"screenshots": [
+		{
+			"src": "pwa-screenshot-1.png",
+			"type": "image/png",
+			"sizes": "1280x720"
+		},
+		{
+			"src": "pwa-screenshot-2.png",
+			"type": "image/png",
+			"sizes": "1280x720"
+		},
+		{
+			"src": "pwa-screenshot-3.png",
+			"type": "image/png",
+			"sizes": "1280x720"
+		},
+		{
+			"src": "pwa-screenshot-4.png",
+			"type": "image/png",
+			"sizes": "1280x720"
+		}
 	]
 }

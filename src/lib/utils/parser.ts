@@ -1,4 +1,9 @@
-import type { Question, QuizQuestion, Text } from '$lib/types/quiz-question';
+import {
+	QuestionType,
+	type Question,
+	type QuizQuestion,
+	type Text
+} from '$lib/types/quiz-question';
 import type { QuizSetting } from '$lib/types/quiz-setting';
 
 export function parseQuizSettings(quiz: string): QuizSetting {
@@ -37,6 +42,7 @@ export function parseQuizQuestions(quiz: string): QuizQuestion {
 			for (let j = 0; j < questionBlocks.length; j++) {
 				let list = {
 					refIndex: refs.length - 1,
+					type: QuestionType.MultipleChoice,
 					question: '',
 					options: [] as string[],
 					answer: '',
@@ -56,12 +62,16 @@ export function parseQuizQuestions(quiz: string): QuizQuestion {
 							k++;
 						}
 					} else if (lines[k].startsWith('@')) {
-						list.answer = lines[k].substring(1);
-						list.options.push(lines[k].substring(1));
+						const answer = lines[k].substring(1).replace(/\r/g, '');
+						list.answer = answer;
+						list.options.push(answer);
 					} else {
-						list.options.push(lines[k]);
+						const answer = lines[k].replace(/\r/g, '');
+						list.options.push(answer);
 					}
 				}
+
+				if (list.options.length === 1) list.type = QuestionType.ShortAnswer;
 
 				lists.push(list);
 			}
@@ -69,6 +79,7 @@ export function parseQuizQuestions(quiz: string): QuizQuestion {
 		} else {
 			let list = {
 				refIndex: -1,
+				type: QuestionType.MultipleChoice,
 				question: '',
 				options: [] as string[],
 				answer: '',
@@ -88,16 +99,21 @@ export function parseQuizQuestions(quiz: string): QuizQuestion {
 						j++;
 					}
 				} else if (lines[j].startsWith('@')) {
-					list.answer = lines[j].substring(1);
-					list.options.push(lines[j].substring(1));
+					const answer = lines[j].substring(1).replace(/\r/g, '');
+					list.answer = answer;
+					list.options.push(answer);
 				} else {
-					list.options.push(lines[j]);
+					const answer = lines[j].replace(/\r/g, '');
+					list.options.push(answer);
 				}
 			}
+
+			if (list.options.length === 1) list.type = QuestionType.ShortAnswer;
 
 			lists.push(list);
 		}
 	}
+	console.log(lists);
 	return {
 		refs: refs,
 		lists: lists

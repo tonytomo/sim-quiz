@@ -25,7 +25,7 @@
 
 	function handleHome() {
 		resetQuiz();
-		goto(base);
+		goto(base + '/');
 	}
 
 	function handleRedoQuiz() {

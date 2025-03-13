@@ -4,7 +4,7 @@
 	import { onMount } from 'svelte';
 	import Header from '$lib/components/header.svelte';
 	import quiz, { resetQuiz } from '$lib/stores/quiz-store';
-	import type { Question } from '$lib/types/quiz-question';
+	import { QuestionType, type Question } from '$lib/types/quiz-question';
 	import { Step } from '$lib/types/quiz-step';
 	import { calculateResult } from '$lib/utils/calculator';
 	import { formatTime } from '$lib/utils/formater';
@@ -41,7 +41,7 @@
 			startTimer();
 		} else {
 			resetQuiz();
-			goto(base);
+			goto(base + '/');
 		}
 
 		window.onbeforeunload = () => {
@@ -84,7 +84,7 @@
 
 	function handleReset() {
 		resetQuiz();
-		goto(base);
+		goto(base + '/');
 	}
 </script>
 
@@ -142,48 +142,83 @@
 			</section>
 		{/if}
 		<section class="container-flex gap-8">
-			<div class="flex-1">
-				{#each $quiz.question.refs[refText].paragraphs as paragraph}
-					<p class="paragraph">
-						{paragraph}
-					</p>
-				{/each}
-			</div>
+			{#if $quiz.question.refs.length > 0}
+				<div class="flex-1">
+					{#each $quiz.question.refs[refText].paragraphs as paragraph}
+						<p class="paragraph">
+							{paragraph}
+						</p>
+					{/each}
+				</div>
+			{/if}
 			<div class="flex-1">
 				<p class="text-sm font-bold">
 					{questions[questionIndex].question}
 				</p>
 				<section class="flex flex-col gap-2 py-4">
-					{#each questions[questionIndex].options as option}
-						<label class="ip-radio">
-							<input
-								type="radio"
-								name="option"
-								value={option}
-								disabled={$quiz.step === 4}
-								hidden
-								checked={userAnswers[questionIndex] === option}
-								bind:this={ref}
-								on:change={handleChooseAnswer}
-							/>
-							<div class="radio-circle">
-								{#if $quiz.step === 4 && option === questions[questionIndex].answer}
-									<i class="ri-circle-line radio-icon text-green-600"></i>
+					{#if questions[questionIndex].type === QuestionType.MultipleChoice}
+						{#each questions[questionIndex].options as option}
+							<label class="ip-radio">
+								<input
+									type="radio"
+									name="option"
+									value={option}
+									disabled={$quiz.step === 4}
+									hidden
+									checked={userAnswers[questionIndex] === option}
+									bind:this={ref}
+									on:change={handleChooseAnswer}
+								/>
+								<div class="radio-circle">
+									{#if $quiz.step === 4 && option === questions[questionIndex].answer}
+										<i class="ri-circle-line radio-icon text-green-600"></i>
+									{/if}
+									{#if userAnswers[questionIndex] === option}
+										<i class="ri-close-large-line radio-icon"></i>
+									{/if}
+								</div>
+								<span class="max-w-[40ch] text-sm">{option}</span>
+							</label>
+						{/each}
+					{:else}
+						<textarea
+							class="ip-textarea"
+							disabled={$quiz.step === 4}
+							placeholder={$quiz.step === 4
+								? 'You did not answer this question'
+								: 'Type your answer here'}
+							value={userAnswers[questionIndex]}
+							on:input={handleChooseAnswer}
+						></textarea>
+						{#if $quiz.step === 4}
+							<div class="timer-gray flex justify-between">
+								{#if questions[questionIndex].answer}
+									<p class="text-sm font-bold">
+										<i class="ri-information-line"></i>
+										Answer: {questions[questionIndex].answer}
+									</p>
 								{/if}
-								{#if userAnswers[questionIndex] === option}
-									<i class="ri-close-large-line radio-icon"></i>
+								{#if questions[questionIndex].answer === userAnswers[questionIndex]}
+									<p class="text-sm font-bold text-green-600">
+										<i class="ri-check-line"></i>
+										Correct
+									</p>
+								{:else if $quiz.step === 4}
+									<p class="text-sm font-bold text-red-400">
+										<i class="ri-close-line"></i>
+										Incorrect
+									</p>
 								{/if}
 							</div>
-							<span class="max-w-[40ch] text-sm">{option}</span>
-						</label>
-					{/each}
+						{/if}
+					{/if}
 				</section>
 			</div>
 		</section>
 	</main>
 
 	<footer class="container-flex gap-4 p-4">
-		{#if $quiz.step === 4}
+		{#if $quiz.step === 4 && questions[questionIndex].explanation.length}
 			<div class="container-color flex-1 text-left">
 				<p class="mb-2 text-sm font-bold">
 					<i class="ri-lightbulb-fill text-yellow-500"></i>

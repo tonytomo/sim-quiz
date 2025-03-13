@@ -20,7 +20,7 @@
 	onMount(() => {
 		if ($quiz.step > Step.ready) {
 			resetQuiz();
-			goto(base);
+			goto(base + '/');
 			return;
 		}
 		if ($quiz.file) {
@@ -29,7 +29,7 @@
 			if (!isLocked) prepareQuiz($quiz.file.content as string);
 		} else {
 			isLoading = false;
-			goto(base);
+			goto(base + '/');
 		}
 	});
 
@@ -88,7 +88,7 @@
 
 	function handleReady() {
 		$quiz.step = Step.ready;
-		goto(base);
+		goto(base + '/');
 	}
 </script>
 
@@ -109,7 +109,7 @@
 			</h3>
 			<section class="container-center">
 				{#if error}
-					<p class="timer-red">{error}</p>
+					<p class="timer-red text-center">{error}</p>
 				{/if}
 				{#if !isLocked && $quiz.setting && $quiz.question}
 					<ul class="container-color text-sm">

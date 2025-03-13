@@ -8,8 +8,14 @@ export interface Text {
 	related: number;
 }
 
+export enum QuestionType {
+	MultipleChoice = 'Multiple Choice',
+	ShortAnswer = 'Short Answer'
+}
+
 export interface Question {
 	refIndex: number;
+	type: QuestionType;
 	question: string;
 	options: string[];
 	answer: string;
