@@ -111,7 +111,7 @@
 							<div class="box active">
 								{index + 1}
 							</div>
-						{:else if $quiz.step === 4 && userAnswers[index] !== questions[index].answer}
+						{:else if $quiz.step === 4 && userAnswers[index].toLowerCase() !== questions[index].answer.toLowerCase()}
 							<div class="box wrong">
 								{index + 1}
 							</div>
@@ -198,7 +198,7 @@
 										Answer: {questions[questionIndex].answer}
 									</p>
 								{/if}
-								{#if questions[questionIndex].answer === userAnswers[questionIndex]}
+								{#if questions[questionIndex].answer.toLowerCase() === userAnswers[questionIndex].toLowerCase()}
 									<p class="text-sm font-bold text-green-600">
 										<i class="ri-check-line"></i>
 										Correct
