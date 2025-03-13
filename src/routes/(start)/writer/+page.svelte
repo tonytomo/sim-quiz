@@ -14,7 +14,7 @@
 			You can write your own quizzes and share them with your friends. You can also use them to
 			study for your exams or to test your knowledge on a specific topic.<br />
 			<br />
-			Estimate reading time: 5 minutes
+			Estimate reading time: 8 minutes
 		</p>
 	</section>
 
@@ -25,6 +25,7 @@
 			<h2 class="title">Table of contents</h2>
 			<ul class="list-inside list-decimal text-sm">
 				<li><a href="#how-to-write-a-quiz">How to write a quiz?</a></li>
+				<li><a href="#question-types">Question Types</a></li>
 				<li><a href="#what-do-the-settings-mean">What do the settings mean?</a></li>
 				<li><a href="#how-to-write-the-text">How to write the text?</a></li>
 				<li><a href="#how-to-write-the-questions">How to write the questions?</a></li>
@@ -74,6 +75,58 @@
 			@Answer 2<br />
 			Answer 3<br />
 			Answer 4<br />
+		</p>
+		<p class="subtitle">
+			Besides the settings, text, and questions, you can also add explanations for each question.
+			The explanations are shown after the user answers the question. You can add as many
+			explanations as you want for each question.
+		</p>
+		<p class="container-color mt-2 text-start font-mono text-sm select-text">
+			...<br />
+			<br />
+			Question 1<br />
+			Answer 1<br />
+			@Answer 2<br />
+			Answer 3<br />
+			Answer 4<br />
+			<b>Explanation:</b><br />
+			This is the explanation for question 1.<br />
+			This is the 2nd line of the explanation.<br />
+			<br />
+			Question 2<br />
+			Answer 1<br />
+			@Answer 2<br />
+			Answer 3<br />
+			Answer 4<br />
+			<b>Explanation:</b><br />
+			This is the explanation for question 2.<br />
+			This is the 2nd line of the explanation.<br />
+			<br />
+			...
+		</p>
+	</section>
+
+	<section class="container-blog gap-2 p-4" id="question-types">
+		<h2 class="title">Question Types</h2>
+		<p class="subtitle">
+			In this platform, you can create multiple choice questions with a single correct answer and
+			short answer questions. For the short answer questions, you just need to write the question
+			and the correct answer, then the platform will automatically set the type as a short answer
+			question. You can see the format for each question type below.
+		</p>
+		<p class="container-color mt-2 text-start font-mono text-sm select-text">
+			...<br />
+			<br />
+			This is short answer question<br />
+			@This is the correct answer<br />
+			<br />
+			This is multiple choice question<br />
+			Answer 1<br />
+			@Answer 2<br />
+			Answer 3<br />
+			Answer 4<br />
+			<br />
+			...
 		</p>
 	</section>
 
