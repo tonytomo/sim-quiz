@@ -57,9 +57,16 @@
 		if ($quiz.question) refText = $quiz.question.lists[questionIndex].refIndex;
 	}
 
+	function checkCorrect(index: number) {
+		if (userAnswers[index] && questions[index].answer) {
+			return userAnswers[index].toLowerCase() === questions[index].answer.toLowerCase();
+		}
+		return false;
+	}
+
 	function handleChooseAnswer(event: Event) {
 		const target = event.target as HTMLInputElement;
-		const value = target.value;
+		const value = target.value.trim();
 		userAnswers[questionIndex] = value;
 	}
 
@@ -111,7 +118,7 @@
 							<div class="box active">
 								{index + 1}
 							</div>
-						{:else if $quiz.step === 4 && userAnswers[index].toLowerCase() !== questions[index].answer.toLowerCase()}
+						{:else if $quiz.step === 4 && !checkCorrect(index)}
 							<div class="box wrong">
 								{index + 1}
 							</div>
@@ -187,7 +194,7 @@
 							placeholder={$quiz.step === 4
 								? 'You did not answer this question'
 								: 'Type your answer here'}
-							value={userAnswers[questionIndex]}
+							value={userAnswers[questionIndex] || ''}
 							on:input={handleChooseAnswer}
 						></textarea>
 						{#if $quiz.step === 4}
@@ -198,7 +205,7 @@
 										Answer: {questions[questionIndex].answer}
 									</p>
 								{/if}
-								{#if questions[questionIndex].answer.toLowerCase() === userAnswers[questionIndex].toLowerCase()}
+								{#if checkCorrect(questionIndex)}
 									<p class="text-sm font-bold text-green-600">
 										<i class="ri-check-line"></i>
 										Correct

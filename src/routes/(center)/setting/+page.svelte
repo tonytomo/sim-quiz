@@ -7,7 +7,7 @@
 	import { parseQuizQuestions, parseQuizSettings } from '$lib/utils/parser';
 	import { Step } from '$lib/types/quiz-step';
 	import type { Question } from '$lib/types/quiz-question';
-	import { decryptContent, encryptContent, importKey } from '$lib/utils/encryption';
+	import { decryptContent, importKey } from '$lib/utils/encryption';
 	import { base } from '$app/paths';
 
 	let ref: HTMLInputElement | null = null;

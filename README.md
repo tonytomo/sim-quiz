@@ -1,38 +1,14 @@
-# sv
+# SimQuiz
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+SimQuiz is a simple quiz game that allows you to create your own quizzes and play them. It is a fun way to test your knowledge and learn new things. You can create quizzes with multiple choice questions and short answer questions. After you complete the quiz, you will receive feedback on your results and explanations for each question. You can also encrypt your quiz file with a generated key to keep it secure.
 
-## Creating a project
+## Features
+1. Upload written quiz questions in a TXT file
+2. Feature multiple choice questions and short answer questions
+3. Give feedback on the quiz results
+4. Questions explanations are provided after the quiz is completed
+5. Encrypt quiz file with a generated key
 
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+## Technologies Used
+- SvelteKit
+- Tailwind CSS
