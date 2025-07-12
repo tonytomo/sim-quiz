@@ -1,11 +1,10 @@
 <script lang="ts">
 	import '../app.css';
-	import 'remixicon/fonts/remixicon.css';
 	import { page } from '$app/state';
 	import Header from '$lib/components/header.svelte';
 </script>
 
-<Header isReset />
+<Header mode="reset" />
 
 <main class="container-stack h-[100svh] gap-4">
 	<h1 class="title">Oops!</h1>

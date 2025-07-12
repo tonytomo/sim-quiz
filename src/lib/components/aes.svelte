@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { EncryptionStep } from '$lib/types/quiz-step';
+	import { EEncryptionStep } from '$lib/types/step';
 	import { convertBytes } from '$lib/utils/converter';
 	import { generateKey, encryptAndDownload, exportKey } from '$lib/utils/encryption';
 
@@ -7,7 +7,7 @@
 	let key: CryptoKey;
 	let file: File | null = null;
 	let filename = 'default';
-	let step = EncryptionStep.upload;
+	let step = EEncryptionStep.upload;
 
 	function handleUploadFile() {
 		if (ref && ref.files && ref.files[0]) {
@@ -20,7 +20,7 @@
 				alert('Please select a file smaller than 1MB.');
 				return;
 			}
-			step = EncryptionStep.generate;
+			step = EEncryptionStep.generate;
 			filename = file.name.split('.').shift() || 'default';
 		}
 	}
@@ -28,7 +28,7 @@
 	async function handleGenerateKey() {
 		key = await generateKey();
 		await exportKey(key, `${filename}_key.json`);
-		step = EncryptionStep.encrypt;
+		step = EEncryptionStep.encrypt;
 	}
 
 	async function handleEncryptFile() {
@@ -63,7 +63,7 @@
 		</button>
 		<i class="ri-arrow-right-s-line"></i>
 		<button
-			disabled={step < EncryptionStep.generate}
+			disabled={step < EEncryptionStep.generate}
 			aria-label="Generate Key"
 			on:click={() => handleGenerateKey()}
 			class="box btn btn-yellow"
@@ -72,7 +72,7 @@
 		</button>
 		<i class="ri-arrow-right-s-line"></i>
 		<button
-			disabled={step < EncryptionStep.encrypt}
+			disabled={step < EEncryptionStep.encrypt}
 			aria-label="Encrypt File"
 			on:click={() => handleEncryptFile()}
 			class="box btn btn-green"

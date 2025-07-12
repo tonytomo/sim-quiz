@@ -3,8 +3,8 @@ import {
 	type Question,
 	type QuizQuestion,
 	type Text
-} from '$lib/types/quiz-question';
-import type { QuizSetting } from '$lib/types/quiz-setting';
+} from '$lib/types/question';
+import type { QuizSetting } from '$lib/types/config';
 
 export function parseQuizSettings(quiz: string): QuizSetting {
 	const quizParts = quiz.split('\n\r\n');

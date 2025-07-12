@@ -1,6 +1,6 @@
-import type { QuizQuestion } from '$lib/types/quiz-question';
-import type { QuizResult } from '$lib/types/quiz-result';
-import type { QuizSetting } from '$lib/types/quiz-setting';
+import type { QuizQuestion } from '$lib/types/question';
+import type { QuizResult } from '$lib/types/result';
+import type { QuizSetting } from '$lib/types/config';
 
 export function calculateResult(
 	settings: QuizSetting,

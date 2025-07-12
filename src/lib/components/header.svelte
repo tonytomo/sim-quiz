@@ -3,12 +3,12 @@
 	import { base } from '$app/paths';
 	import { resetQuiz } from '$lib/stores/quiz-store';
 
-	let {
-		isBack,
-		isHome,
-		isReset,
-		isDisabled
-	}: { isBack?: boolean; isHome?: boolean; isReset?: boolean; isDisabled?: boolean } = $props();
+	interface HeaderProps {
+		mode: 'back' | 'home' | 'reset' | 'about';
+		isDisabled?: boolean;
+	}
+
+	let { mode = 'about', isDisabled }: HeaderProps = $props();
 
 	function handleReset() {
 		resetQuiz();
@@ -20,32 +20,32 @@
 	<figure class="logo">
 		SimQuiz<span class="logo animate-pulse">.</span>
 	</figure>
-	{#if isBack}
+	{#if mode === 'back'}
 		<button
 			disabled={isDisabled}
 			aria-label="Back"
 			class="box btn btn-ghost"
 			onclick={() => window.history.back()}
 		>
-			<i class="ri-arrow-go-back-line"></i>
+			Back
 		</button>
-	{:else if isHome}
+	{:else if mode === 'home'}
 		<button
 			disabled={isDisabled}
 			aria-label="Go Home"
 			class="box btn btn-ghost"
 			onclick={() => goto(base + '/')}
 		>
-			<i class="ri-home-fill"></i>
+			Home
 		</button>
-	{:else if isReset}
+	{:else if mode === 'reset'}
 		<button
 			disabled={isDisabled}
 			aria-label="Reset"
 			class="box btn btn-ghost"
 			onclick={handleReset}
 		>
-			<i class="ri-refresh-fill"></i>
+			Reset
 		</button>
 	{:else}
 		<button
@@ -54,7 +54,7 @@
 			class="box btn btn-ghost"
 			onclick={() => goto(base + '/about')}
 		>
-			<i class="ri-information-line"></i>
+			About
 		</button>
 	{/if}
 </header>

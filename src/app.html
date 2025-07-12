@@ -1,16 +1,59 @@
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
 		<link rel="manifest" href="%sveltekit.assets%/manifest.json" />
+
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>SimQuiz - Quiz Platform for Simulation and Making Quizzes</title>
+		<meta
+			name="description"
+			content="SimQuiz is a quiz platform that allows you to create, share, and play quizzes on various topics."
+		/>
+		<meta name="author" content="Tony S. Tomo" />
+		<meta name="theme-color" content="#1f1f1f" />
+		<meta name="robots" content="index, follow" />
+		<meta name="googlebot" content="index, follow" />
 		%sveltekit.head%
+
+		<!-- Open Graph -->
+		<meta
+			property="og:title"
+			content=" SimQuiz - Quiz Platform for Simulation and Making Quizzes"
+		/>
+		<meta
+			property="og:description"
+			content="SimQuiz is a quiz platform that allows you to create, share, and play quizzes on various topics."
+		/>
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://simquiz.tonytomo.me" />
+		<meta property="og:image" content="%sveltekit.assets%/maskable-icon-512x512.png" />
+		<meta property="og:image:alt" content="SimQuiz Logo" />
+		<meta property="og:site_name" content="SimQuiz" />
+		<meta property="og:locale" content="id_ID" />
+
+		<!-- Twitter Card -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta
+			name="twitter:title"
+			content="SimQuiz - Quiz Platform for Simulation and Making Quizzes"
+		/>
+		<meta
+			name="twitter:description"
+			content="SimQuiz is a quiz platform that allows you to create, share, and play quizzes on various topics."
+		/>
+		<meta name="twitter:image" content="%sveltekit.assets%/maskable-icon-512x512.png" />
+		<meta name="twitter:site" content="@tonytomo" />
+		<meta name="twitter:creator" content="@tonytomo" />
+
+		<link rel="icon" href="%sveltekit.assets%/favicon.ico" type="image/x-icon" />
+		<link rel="shortcut icon" href="%sveltekit.assets%/favicon.ico" type="image/x-icon" />
+		<link rel="apple-touch-icon" href="%sveltekit.assets%/apple-touch-icon-180x180.png" />
+		<link rel="canonical" href="https://simquiz.tonytomo.me" />
 	</head>
-	<body
-		data-sveltekit-preload-data="hover"
-		class="bg-slate-50 text-slate-950 dark:bg-slate-800 dark:text-slate-50"
-	>
+	<body data-sveltekit-preload-data="hover">
 		<div style="display: contents">%sveltekit.body%</div>
 	</body>
 </html>
