@@ -1,25 +1,34 @@
 <script lang="ts">
 	import '../app.css';
 	import { page } from '$app/state';
-	import Header from '$lib/components/header.svelte';
+	import Button from '$lib/components/button.svelte';
 </script>
 
-<Header mode="reset" />
+<main>
+	<section>
+		<h1>Mohon maaf,</h1>
+		{#if page.status === 404}
+			<h2>Halaman yang kamu cari tidak ditemukan.</h2>
+		{:else if page.status === 500}
+			<h2>Terjadi kesalahan pada server. Silakan coba lagi nanti.</h2>
+		{:else}
+			<h2>Terjadi kesalahan yang tidak terduga. Silakan coba lagi nanti.</h2>
+		{/if}
 
-<main class="container-stack h-[100svh] gap-4">
-	<h1 class="title">Oops!</h1>
-	{#if page.status === 404}
-		<h3 class="text-sm">The page you are looking for does not exist.</h3>
-	{:else if page.status === 500}
-		<h3 class="text-sm">An error occurred on the server. Please try again later.</h3>
-	{:else}
-		<h3 class="text-sm">An error occurred. Please try again later.</h3>
-	{/if}
+		{#if page.error}
+			<p class="error-box">{page.error.message}</p>
+		{/if}
 
-	{#if page.error}
-		<section class="container-color gap-2 text-center">
-			<i class="ri-error-warning-fill"></i>
-			<p class="text-sm">{page.error.message}</p>
-		</section>
-	{/if}
+		<Button href="/" label="Kembali ke Beranda" variant="neutral" />
+	</section>
 </main>
+
+<style>
+	.error-box {
+		background-color: var(--text-dark);
+		color: var(--error-text);
+		padding: 1rem;
+		border-radius: 0.5rem;
+		margin-top: 2rem;
+	}
+</style>
