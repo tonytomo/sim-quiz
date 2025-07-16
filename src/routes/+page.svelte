@@ -1,23 +1,22 @@
 <script>
 	import { base } from '$app/paths';
 	import Button from '$lib/components/button.svelte';
+	import profile from '$lib/stores/profile';
 	import { onMount } from 'svelte';
-
-	let name = '';
 
 	onMount(() => {
 		const storedName = localStorage.getItem('simquiz_name');
 		if (!storedName) return;
-		name = storedName;
+		$profile.name = storedName;
 	});
 </script>
 
 <main>
 	<section>
 		<hgroup>
-			{#if name}
+			{#if $profile.name}
 				<h1>
-					Halo <span>{name}</span>, selamat datang!
+					Halo <span>{$profile.name}</span>, selamat datang!
 				</h1>
 			{:else}
 				<h1>Buat dan mainkan kuis dengan <span>SimQuiz!</span></h1>
@@ -29,7 +28,7 @@
 		</hgroup>
 
 		<div class="action">
-			{#if name}
+			{#if $profile.name}
 				<Button href={base + '/play'} label="Mulai" variant="primary" />
 				<Button href={base + '/hello'} label="Ubah Nama" variant="success" />
 			{:else}

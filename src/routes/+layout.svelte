@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 	import logo from '$lib/assets/logo.webp';
 	import SlideTransition from '$lib/components/transitions/slide.svelte';
+	import profile from '$lib/stores/profile';
 
 	export let data;
 
@@ -33,6 +34,11 @@
 
 <header>
 	<img src={logo} alt="SimQuiz Logo" class="logo" />
+	{#if $profile.name}
+		<p class="username">Halo, {$profile.name}!</p>
+	{:else}
+		<p class="username">Halo, teman!</p>
+	{/if}
 </header>
 
 {#key data.path}
@@ -45,11 +51,20 @@
 	header {
 		padding: 0.75rem 2rem;
 		border-bottom: 1px solid var(--border);
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
 	}
 
 	.logo {
 		width: 42px;
 		height: auto;
+	}
+
+	p.username {
+		font-size: 1.2rem;
+		color: var(--text);
+		margin: 0;
 	}
 
 	@media (min-width: 600px) {

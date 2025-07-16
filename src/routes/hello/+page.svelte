@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { base } from '$app/paths';
 	import Button from '$lib/components/button.svelte';
+	import { resetProfile } from '$lib/stores/profile';
 	import { onMount } from 'svelte';
 
 	let name = '';
@@ -23,6 +24,7 @@
 
 	function clearName() {
 		localStorage.removeItem('simquiz_name');
+		resetProfile();
 		goto(base + '/');
 	}
 </script>
