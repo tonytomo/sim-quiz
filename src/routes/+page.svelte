@@ -21,17 +21,16 @@
 				</h1>
 			{:else}
 				<h1>Buat dan mainkan kuis dengan <span>SimQuiz!</span></h1>
+				<p>
+					SimQuiz adalah aplikasi web yang memungkinkan kamu membuat dan memainkan kuis interaktif
+					dengan mudah. Apakah kamu siap untuk mulai?
+				</p>
 			{/if}
-
-			<p>
-				SimQuiz adalah aplikasi web yang memungkinkan kamu membuat dan memainkan kuis interaktif
-				dengan mudah. Apakah kamu siap untuk mulai?
-			</p>
 		</hgroup>
 
 		<div class="action">
 			{#if name}
-				<Button href={base + '/start'} label="Mulai" variant="primary" />
+				<Button href={base + '/play'} label="Mulai" variant="primary" />
 				<Button href={base + '/hello'} label="Ubah Nama" variant="success" />
 			{:else}
 				<Button href={base + '/hello'} label="Kenalan Yuk" variant="info" />
@@ -43,6 +42,7 @@
 <style>
 	.action {
 		display: flex;
+		flex-wrap: wrap;
 		flex-direction: column;
 		align-items: center;
 		margin-top: 2rem;

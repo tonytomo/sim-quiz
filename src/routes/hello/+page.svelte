@@ -15,7 +15,9 @@
 
 	function storeName() {
 		if (!name) return;
-		localStorage.setItem('simquiz_name', name.trim());
+		name = name.trim();
+		name = name.charAt(0).toUpperCase() + name.slice(1);
+		localStorage.setItem('simquiz_name', name);
 		goto(base + '/');
 	}
 
@@ -73,7 +75,7 @@
 		border-radius: 10px;
 		box-shadow: 0 8px 0 var(--mid);
 		width: 100%;
-		max-width: 420px;
+		max-width: 540px;
 	}
 
 	.action-flex {
