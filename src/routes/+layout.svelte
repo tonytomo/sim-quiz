@@ -35,9 +35,9 @@
 <header>
 	<img src={logo} alt="SimQuiz Logo" class="logo" />
 	{#if $profile.name}
-		<p class="username">Halo, {$profile.name}!</p>
+		<p class="username">Halo, <b>{$profile.name}!</b></p>
 	{:else}
-		<p class="username">Halo, teman!</p>
+		<p class="username">Halo, <b>teman!</b></p>
 	{/if}
 </header>
 

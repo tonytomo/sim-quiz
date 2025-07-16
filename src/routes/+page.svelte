@@ -1,7 +1,7 @@
 <script>
 	import { base } from '$app/paths';
 	import Button from '$lib/components/button.svelte';
-	import profile from '$lib/stores/profile';
+	import profile, { resetProfile } from '$lib/stores/profile';
 	import { onMount } from 'svelte';
 
 	onMount(() => {
@@ -9,6 +9,11 @@
 		if (!storedName) return;
 		$profile.name = storedName;
 	});
+
+	function clearName() {
+		localStorage.removeItem('simquiz_name');
+		resetProfile();
+	}
 </script>
 
 <main>
@@ -16,23 +21,21 @@
 		<hgroup>
 			{#if $profile.name}
 				<h1>
-					Halo <span>{$profile.name}</span>, selamat datang!
+					Selamat datang, <span>{$profile.name}!</span>
 				</h1>
 			{:else}
-				<h1>Buat dan mainkan kuis dengan <span>SimQuiz!</span></h1>
-				<p>
-					SimQuiz adalah aplikasi web yang memungkinkan kamu membuat dan memainkan kuis interaktif
-					dengan mudah. Apakah kamu siap untuk mulai?
-				</p>
+				<h1>Mulai membuat dan bermain kuis bersama <span>Siqu!</span></h1>
+				<p>Kamu bisa membuat dan memainkan kuis interaktif dengan mudah. Yuk, mulai sekarang!</p>
 			{/if}
 		</hgroup>
 
 		<div class="action">
 			{#if $profile.name}
 				<Button href={base + '/play'} label="Mulai" variant="primary" />
-				<Button href={base + '/hello'} label="Ubah Nama" variant="success" />
+				<Button href={base + '/profile'} label="Profil" variant="accent" />
+				<Button label="Keluar" variant="danger" onclick={clearName} />
 			{:else}
-				<Button href={base + '/hello'} label="Kenalan Yuk" variant="info" />
+				<Button href={base + '/hello'} label="Mulai" variant="info" />
 			{/if}
 		</div>
 	</section>
@@ -51,7 +54,7 @@
 		.action {
 			flex-direction: row;
 			justify-content: center;
-			gap: 1rem;
+			column-gap: 1rem;
 			margin-top: 4rem;
 		}
 	}

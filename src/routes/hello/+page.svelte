@@ -2,7 +2,6 @@
 	import { goto } from '$app/navigation';
 	import { base } from '$app/paths';
 	import Button from '$lib/components/button.svelte';
-	import { resetProfile } from '$lib/stores/profile';
 	import { onMount } from 'svelte';
 
 	let name = '';
@@ -19,13 +18,12 @@
 		name = name.trim();
 		name = name.charAt(0).toUpperCase() + name.slice(1);
 		localStorage.setItem('simquiz_name', name);
-		goto(base + '/');
-	}
 
-	function clearName() {
-		localStorage.removeItem('simquiz_name');
-		resetProfile();
-		goto(base + '/');
+		if (!storedName) {
+			goto(base + '/');
+			return;
+		}
+		goto(base + '/profile');
 	}
 </script>
 
@@ -37,10 +35,8 @@
 					Halo <span>{storedName}</span>, apa kabar?
 				</h1>
 			{:else}
-				<h1>
-					Halo namaku <span>Sim!</span>
-					Kenalan dulu yuk!
-				</h1>
+				<h1>Halo, namaku <span>Siqu!</span> <br /> Siapa namamu?</h1>
+				<p>Tulis namamu di bawah ini, supaya aku bisa memanggilmu dengan nama yang kamu suka.</p>
 			{/if}
 		</hgroup>
 
@@ -50,11 +46,10 @@
 			<div class="action-flex">
 				{#if storedName}
 					<Button label="Ubah" variant="success" onclick={storeName} />
-					<Button label="Hapus" variant="danger" onclick={clearName} />
 				{:else}
 					<Button label="Halo" variant="primary" onclick={storeName} />
 				{/if}
-				<Button href={base + '/'} label="Kembali" variant="neutral" />
+				<Button href={base + '/profile'} label="Kembali" variant="neutral" />
 			</div>
 		</div>
 	</section>
@@ -70,14 +65,15 @@
 	}
 
 	input {
-		padding: 1rem 1.5rem;
+		padding: 1rem;
 		font-size: 1.2rem;
+		font-weight: bold;
 		outline: none;
 		border: none;
 		border-radius: 10px;
-		box-shadow: 0 8px 0 var(--mid);
+		box-shadow: 0 4px 0 4px var(--mid);
 		width: 100%;
-		max-width: 540px;
+		max-width: 280px;
 	}
 
 	.action-flex {
