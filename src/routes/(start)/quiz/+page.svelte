@@ -149,7 +149,7 @@
 			</section>
 		{/if}
 		<section class="container-flex gap-8">
-			{#if $quiz.question.refs.length > 0}
+			{#if $quiz.question.refs.length > 0 && $quiz.question.refs[refText]}
 				<div class="flex-1">
 					{#each $quiz.question.refs[refText].paragraphs as paragraph}
 						<p class="paragraph">
