@@ -184,7 +184,7 @@
 										<i class="ri-close-large-line radio-icon"></i>
 									{/if}
 								</div>
-								<span class="max-w-[40ch] text-sm">{option}</span>
+								<span class="w-full max-w-[40ch] md:max-w-auto text-sm">{option}</span>
 							</label>
 						{/each}
 					{:else}
