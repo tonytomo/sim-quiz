@@ -46,10 +46,11 @@
 			<div class="action-flex">
 				{#if storedName}
 					<Button label="Ubah" variant="success" onclick={storeName} />
+					<Button href={base + '/profile'} label="Kembali" variant="neutral" />
 				{:else}
 					<Button label="Halo" variant="primary" onclick={storeName} />
+					<Button href={base + '/'} label="Kembali" variant="neutral" />
 				{/if}
-				<Button href={base + '/profile'} label="Kembali" variant="neutral" />
 			</div>
 		</div>
 	</section>

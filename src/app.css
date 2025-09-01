@@ -1,105 +1,44 @@
-:root {
-	--bg: #1f1f1f;
-	--primary: #36ab8e;
-	--primary-hover: #52c2a6;
-	--primary-dark: #19785f;
-	--secondary: #e28e21;
-	--secondary-hover: #f5a339;
-	--secondary-dark: #a06416;
-	--accent: #b258dc;
-	--accent-hover: #d575ed;
-	--accent-dark: #a045bc;
-	--success: #4fc053;
-	--success-hover: #5ecd65;
-	--success-dark: #348838;
-	--danger: #f43656;
-	--danger-hover: #ed536c;
-	--danger-dark: #91152a;
-	--warning: #dac02e;
-	--warning-hover: #b2941b;
-	--warning-dark: #b79f26;
-	--info: #2b85ce;
-	--info-hover: #399bd7;
-	--info-dark: #2264a5;
-	--neutral: #3d3d3d;
-	--neutral-hover: #545454;
-	--neutral-dark: #333333;
-	--text: #ffffff;
-	--text-dark: #1b1a1a;
-	--shadow: #111111;
-	--mid: #727983;
-	--border: #2c2c2c;
-	--logo-gradient: linear-gradient(135deg, #2196f3, #2e9178, #4caf50);
-	--system-ui:
-		-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
-		'Helvetica Neue', sans-serif;
-}
+@import 'tailwindcss';
 
-* {
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
-}
-
-body {
-	background-color: var(--bg);
-	color: var(--text);
-	font-family: var(--system-ui);
-	font-size: 1rem;
-	display: flex;
-	flex-direction: column;
-	height: 100vh;
-	overflow: hidden;
-}
-
-main {
-	display: flex;
-	flex-direction: column;
-	align-items: start;
-	justify-content: center;
-	text-align: center;
-	height: 100%;
-	padding: 2rem;
-}
-
-section {
-	width: 100%;
-	max-width: 600px;
-	margin: 0 auto;
-}
-
-h1 {
-	font-size: 2.25rem;
-	font-weight: 600;
-	line-height: 1.1;
-	margin-bottom: 1rem;
-}
-
-h1 > span {
-	color: transparent;
-	background: var(--logo-gradient);
-	-webkit-background-clip: text;
-	background-clip: text;
-	font-weight: bolder;
-}
-
-p {
-	font-size: 1rem;
-	color: var(--mid);
-	line-height: 1.5;
-	margin-bottom: 2rem;
-}
-
-@media (min-width: 600px) {
-	main {
-		padding: 3rem;
+@layer base {
+	body {
+		@apply bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100;
+		@apply font-sans text-lg leading-relaxed font-light;
+		@apply font-['Playpen_Sans',cursive];
 	}
+}
 
-	h1 {
-		font-size: 3rem;
+@layer components {
+	.btn {
+		@apply cursor-pointer rounded px-4 py-2 font-medium transition-colors;
+		@apply focus:ring-1 focus:outline-none;
+		@apply text-gray-900 disabled:cursor-not-allowed;
+		@apply shadow-[0_0.115rem_0_0.115rem_#1a202c,0_0_0_0.115rem_#1a202c];
+		@apply dark:shadow-[0_0.115rem_0_0.115rem_#fff,0_0_0_0.115rem_#fff];
 	}
+	.btn-wide {
+		@apply w-full max-w-3xs;
+	}
+	.btn-lg {
+		@apply px-6 py-3 text-lg;
+	}
+	.btn-primary {
+		@apply hover:bg-teal-600 dark:text-white;
+	}
+	.btn-secondary {
+		@apply hover:bg-purple-600 dark:text-white;
+	}
+	.btn-accent {
+		@apply hover:bg-amber-600 dark:text-white;
+	}
+	.btn-info {
+		@apply hover:bg-blue-600 dark:text-white;
+	}
+}
 
-	p {
-		font-size: 1.25rem;
+@layer utilities {
+	.text-gradient {
+		@apply bg-clip-text text-transparent;
+		@apply bg-gradient-to-r from-blue-500 via-teal-500 to-green-500;
 	}
 }
