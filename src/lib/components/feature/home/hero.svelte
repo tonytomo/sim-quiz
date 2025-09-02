@@ -4,13 +4,13 @@
 			<div class="marquee effect-3d scrollbar-none">
 				<p class="text-[12rem] font-black tracking-tighter text-gray-700 uppercase">
 					{#each Array(4) as _, i}
-						sim<span class="text-gray-400">quiz</span>
+						sim<span class="text-gradient">quiz</span>
 					{/each}
 				</p>
 			</div>
 		</div>
 		<h1 class="px-4 text-xl font-medium md:text-2xl">
-			SimQuiz: Platform Kuis untuk Simulasi dan Membuat Kuis
+			SimQuiz: Platform untuk Simulasi dan Membuat Kuis
 		</h1>
 	</hgroup>
 

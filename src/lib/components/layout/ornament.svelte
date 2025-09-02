@@ -2,7 +2,7 @@
 	import { browser } from '$app/environment';
 
 	export let pos: 'tl' | 'tr' | 'bl' | 'br' = 'tr';
-	export let size: 16 | 20 | 24 | 28 | 32 | 36 = 24;
+	export let size: number = 24;
 	export let color: string = 'currentColor';
 	export let opacity: number = 0.1;
 	export let rotate: number = 0;

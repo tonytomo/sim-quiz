@@ -3,7 +3,7 @@
 		<div class="marquee effect-3d scrollbar-none">
 			<h2 class="flex text-[12rem] font-black tracking-tighter text-gray-700 uppercase">
 				{#each Array(4) as _, i}
-					kenapa<span class="text-gray-400">simquiz?</span>
+					kenapa<span class="text-gradient">simquiz?</span>
 				{/each}
 			</h2>
 		</div>
