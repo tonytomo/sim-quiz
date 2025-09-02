@@ -1,19 +1,69 @@
 <script lang="ts">
 	import Ornament from '$lib/components/layout/ornament.svelte';
+	import { onMount } from 'svelte';
+
+	onMount(() => {
+		const marquees = document.querySelectorAll<HTMLElement>('.marquee');
+		if (marquees.length === 0) return;
+		for (const marquee of marquees) {
+			let scrollAmount = 0;
+			const speed = 2;
+
+			const animate = () => {
+				scrollAmount += speed;
+				if (scrollAmount >= marquee.scrollWidth / 2) {
+					scrollAmount = 0;
+				}
+				marquee.scrollTo(scrollAmount, 0);
+				requestAnimationFrame(animate);
+			};
+
+			animate();
+		}
+	});
+
+	onMount(() => {
+		const dropZone = document.getElementById('drop-zone');
+		if (!dropZone) return;
+
+		dropZone.addEventListener('dragover', (e) => {
+			e.preventDefault();
+			dropZone.classList.add('bg-gray-100', 'dark:bg-gray-600');
+		});
+
+		dropZone.addEventListener('dragleave', () => {
+			dropZone.classList.remove('bg-gray-100', 'dark:bg-gray-600');
+		});
+
+		dropZone.addEventListener('drop', (e) => {
+			e.preventDefault();
+			dropZone.classList.remove('bg-gray-100', 'dark:bg-gray-600');
+
+			const files = e.dataTransfer?.files;
+			if (files && files.length > 0) {
+				// Handle the dropped files here
+				console.log(files);
+			}
+		});
+	});
 </script>
 
 <Ornament size={36} parallaxSpeed={0.2} />
 <Ornament pos="bl" size={28} rotate={45} parallaxSpeed={0.1} />
 
 <figure class="fixed top-0 left-0 z-30 p-4">
-	<a href="/"> <img src="/favicon.png" alt="SimQuiz Logo" class="size-16" /> </a>
+	<a href="/"> <img src="/favicon.png" alt="SimQuiz Logo" class="size-12 md:size-16" /> </a>
 </figure>
 
-<main>
+<div class="fixed top-0 right-0 z-30 p-4 md:p-6">
+	<a href="/make" class="btn btn-sm btn-secondary">Buat Kuis</a>
+</div>
+
+<main id="drop-zone">
 	<section class="mx-auto flex min-h-screen max-w-6xl flex-col justify-center text-center">
 		<hgroup class="flex flex-col items-center text-center">
-			<div class="mx-auto flex h-80 w-full max-w-6xl items-stretch">
-				<div class="scrollbar-none flex w-full items-center gap-4 overflow-x-auto">
+			<div class="mx-auto flex h-80 w-full max-w-6xl items-stretch overflow-hidden">
+				<div class="marquee effect-3d scrollbar-none">
 					<h1 class="text-[12rem] font-black tracking-tighter text-gray-700 uppercase">
 						{#each Array(4) as _, i}
 							sim<span class="text-gray-400">quiz</span>
@@ -24,14 +74,15 @@
 			<p class="px-4 text-2xl font-medium">Platform Kuis untuk Simulasi dan Membuat Kuis</p>
 		</hgroup>
 
-		<div class="mt-16">
+		<div class="mt-8">
 			<a href="/start" class="btn btn-wide btn-lg btn-primary">Mulai</a>
+			<p class="pt-4 text-sm text-gray-600 dark:text-gray-400">atau letakkan file di sini</p>
 		</div>
 	</section>
 
-	<section class="mx-auto flex min-h-screen max-w-6xl flex-col justify-center px-4 text-center">
-		<div class="mx-auto flex h-80 w-full max-w-6xl items-stretch">
-			<div class="scrollbar-none flex w-full items-center gap-4 overflow-x-auto">
+	<section class="mx-auto flex min-h-screen max-w-6xl flex-col justify-center text-center">
+		<div class="mx-auto flex h-80 w-full max-w-6xl items-stretch overflow-hidden">
+			<div class="marquee effect-3d scrollbar-none">
 				<h2 class="flex text-[12rem] font-black tracking-tighter text-gray-700 uppercase">
 					{#each Array(4) as _, i}
 						kenapa<span class="text-gray-400">simquiz?</span>
@@ -39,7 +90,7 @@
 				</h2>
 			</div>
 		</div>
-		<div class="grid gap-8 md:grid-cols-3">
+		<div class="grid gap-8 px-4 md:grid-cols-3">
 			<article class="card">
 				<h3 class="mb-4 text-xl font-semibold">Mudah Digunakan</h3>
 				<p class="text-gray-700 dark:text-gray-300">
