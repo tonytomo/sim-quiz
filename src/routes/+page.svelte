@@ -59,7 +59,7 @@
 </figure>
 
 <div class="fixed top-0 right-0 z-30 p-4 md:p-6">
-	<a href="/make" class="btn btn-sm btn-secondary">Buat Kuis</a>
+	<a href="/make" class="btn btn-secondary">Buat Kuis</a>
 </div>
 
 <div
