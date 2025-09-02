@@ -41,7 +41,7 @@
 <button
 	id="drop-zone"
 	class="fixed inset-0 grid place-items-center {isDragging
-		? 'z-50 bg-white/50 backdrop-blur-md'
+		? 'z-50 bg-black/50 backdrop-blur-md'
 		: 'z-0'}"
 	on:dragenter={onDragEnter}
 	on:dragleave={onDragLeave}
@@ -49,7 +49,7 @@
 	on:drop={onDrop}
 >
 	{#if isDragging}
-		<div class="p-8 text-center text-gray-900">
+		<div class="p-8 text-center text-gray-100">
 			<p class="text-2xl font-black">Letakkan file di sini</p>
 			<p class="mt-2">Mendukung format: .txt, .squiz</p>
 		</div>

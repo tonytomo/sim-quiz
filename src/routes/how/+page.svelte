@@ -1,4 +1,7 @@
 <script lang="ts">
+	import MainFooter from '$lib/components/layout/footer/mainFooter.svelte';
+	import MainHeader from '$lib/components/layout/header/mainHeader.svelte';
+	import Meta from '$lib/components/layout/meta.svelte';
 	import Ornament from '$lib/components/layout/ornament.svelte';
 	import { animateMarquee } from '$lib/utils/animation/marquee';
 	import { onMount } from 'svelte';
@@ -7,7 +10,13 @@
 	onMount(animateMarquee);
 </script>
 
-<main class="h-screen overflow-y-auto scroll-smooth">
+<Meta
+	title="SimQuiz: Cara Memulai Membuat Kuis Interaktif"
+	description="Pelajari cara membuat kuis interaktif dengan SimQuiz. Ikuti panduan langkah demi langkah kami untuk memulai perjalanan pembuatan kuis Anda."
+/>
+
+<MainHeader />
+<main>
 	<Ornament pos="tl" size={60} />
 	<Ornament pos="br" size={48} />
 
@@ -19,16 +28,16 @@
 						class="text-[12rem] font-black tracking-tighter text-gray-400 uppercase dark:text-gray-700"
 					>
 						{#each Array(4) as _, i}
-							cara<span class="text-gradient">cepat</span>
+							panduan<span class="text-gradient">soal</span>
 						{/each}
 					</p>
 				</div>
 			</div>
-			<h1 class="px-4 text-xl font-medium md:text-2xl">SimQuiz: Cara Mulai Membuat Kuismu</h1>
+			<h1 class="px-4 text-xl font-medium md:text-2xl">SimQuiz: Mulai Membuat Kuismu</h1>
 		</hgroup>
 
 		<div class="mt-8 text-center" in:fly={{ y: 20, duration: 400, delay: 200 }}>
-			<a href="#getting-started" title="Mulai Pelajari" class="btn btn-wide btn-lg btn-primary">
+			<a href="#getting-started" title="Mulai Pelajari" class="btn btn-wide btn-lg btn-info">
 				Mulai Pelajari
 			</a>
 		</div>
@@ -39,3 +48,4 @@
 		class="mx-auto flex min-h-screen max-w-6xl flex-col justify-center px-4"
 	></section>
 </main>
+<MainFooter />
