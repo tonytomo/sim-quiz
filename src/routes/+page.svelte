@@ -70,11 +70,13 @@
 <Ornament pos="bl" size={28} rotate={45} parallaxSpeed={0.1} />
 
 <figure class="fixed top-0 left-0 z-30 p-4">
-	<a href="/"> <img src="/favicon.png" alt="SimQuiz Logo" class="size-12 md:size-16" /> </a>
+	<a href="/" title="Kembali ke Beranda">
+		<img src="/favicon.png" alt="SimQuiz Logo" title="Logo SimQuiz" class="size-12 md:size-16" />
+	</a>
 </figure>
 
 <div class="fixed top-0 right-0 z-30 p-4 md:p-6">
-	<a href="/make" class="btn btn-secondary">Buat Kuis</a>
+	<a href="/make" title="Buat Kuis" class="btn btn-secondary">Buat Kuis</a>
 </div>
 
 <div
@@ -109,7 +111,7 @@
 		</hgroup>
 
 		<div class="mt-8">
-			<a href="/start" class="btn btn-wide btn-lg btn-primary">Mulai</a>
+			<a href="/start" title="Mulai Kuis" class="btn btn-wide btn-lg btn-primary">Mulai</a>
 			<p class="pt-4 text-sm text-gray-600 dark:text-gray-400">atau letakkan file di sini</p>
 		</div>
 	</section>
