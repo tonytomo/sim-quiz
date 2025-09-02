@@ -1,6 +1,9 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import Ornament from '$lib/components/layout/ornament.svelte';
 	import { onMount } from 'svelte';
+
+	let onDragOver = false;
 
 	onMount(() => {
 		const marquees = document.querySelectorAll<HTMLElement>('.marquee');
@@ -28,16 +31,16 @@
 
 		dropZone.addEventListener('dragover', (e) => {
 			e.preventDefault();
-			dropZone.classList.add('bg-gray-100', 'dark:bg-gray-600');
+			onDragOver = true;
 		});
 
 		dropZone.addEventListener('dragleave', () => {
-			dropZone.classList.remove('bg-gray-100', 'dark:bg-gray-600');
+			onDragOver = false;
 		});
 
 		dropZone.addEventListener('drop', (e) => {
 			e.preventDefault();
-			dropZone.classList.remove('bg-gray-100', 'dark:bg-gray-600');
+			onDragOver = false;
 
 			const files = e.dataTransfer?.files;
 			if (files && files.length > 0) {
@@ -59,7 +62,21 @@
 	<a href="/make" class="btn btn-sm btn-secondary">Buat Kuis</a>
 </div>
 
-<main id="drop-zone">
+<div
+	id="drop-zone"
+	class="fixed inset-0 grid place-items-center {onDragOver
+		? 'z-50 bg-white/50 backdrop-blur-md'
+		: 'z-0'}"
+>
+	{#if onDragOver}
+		<div class="p-8 text-center text-gray-900">
+			<p class="text-2xl font-black">Letakkan file di sini</p>
+			<p class="mt-2">Mendukung format: .txt, .squiz</p>
+		</div>
+	{/if}
+</div>
+
+<main>
 	<section class="mx-auto flex min-h-screen max-w-6xl flex-col justify-center text-center">
 		<hgroup class="flex flex-col items-center text-center">
 			<div class="mx-auto flex h-80 w-full max-w-6xl items-stretch overflow-hidden">
