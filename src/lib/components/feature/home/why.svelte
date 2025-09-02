@@ -1,14 +1,18 @@
+<script lang="ts">
+	import { fly } from 'svelte/transition';
+</script>
+
 <section class="mx-auto flex min-h-screen max-w-6xl flex-col justify-center text-center">
 	<div class="mx-auto flex h-80 w-full max-w-6xl items-stretch overflow-hidden">
 		<div class="marquee effect-3d scrollbar-none">
 			<h2 class="flex text-[12rem] font-black tracking-tighter text-gray-700 uppercase">
-				{#each Array(4) as _, i}
+				{#each Array(4) as _}
 					kenapa<span class="text-gradient">simquiz?</span>
 				{/each}
 			</h2>
 		</div>
 	</div>
-	<div class="grid gap-8 px-4 md:grid-cols-3">
+	<div class="grid gap-8 px-4 md:grid-cols-3" in:fly={{ y: 20, duration: 400, delay: 200 }}>
 		<article class="card">
 			<h3 class="mb-4 text-xl font-semibold">Mudah Digunakan</h3>
 			<p class="text-gray-700 dark:text-gray-300">
