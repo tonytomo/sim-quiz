@@ -19,7 +19,7 @@
 	<Ornament pos="tl" size={48} />
 	<Ornament pos="br" size={32} />
 
-	<section class="mx-auto flex h-screen max-w-6xl flex-col items-center justify-center">
+	<section class="mx-auto flex h-screen max-w-6xl flex-col items-center justify-center px-4">
 		{#if !loading}
 			<div
 				class="card flex flex-col items-center text-center"
@@ -35,7 +35,7 @@
 				{/if}
 
 				{#if page.error}
-					<p class="card my-8 bg-black/50 font-mono">
+					<p class="card my-8 bg-gray-200 font-mono dark:bg-black/50">
 						<span class="font-bold text-red-500">Error Details:</span>
 						{page.error.message}
 					</p>

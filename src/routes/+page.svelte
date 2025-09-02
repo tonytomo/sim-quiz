@@ -28,7 +28,7 @@
 			</p>
 			<div class="flex flex-wrap justify-center gap-4">
 				<a href="/make" class="btn btn-secondary btn-lg"> Mulai Sekarang </a>
-				<a href="/about" class="btn btn-info btn-lg"> Pelajari Lebih Lanjut </a>
+				<a href="/how" class="btn btn-info btn-lg"> Pelajari Caranya </a>
 			</div>
 		</div>
 	</section>

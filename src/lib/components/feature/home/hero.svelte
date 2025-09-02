@@ -11,7 +11,9 @@
 		<hgroup class="flex flex-col items-center text-center" in:fly={{ y: 20, duration: 400 }}>
 			<div class="mx-auto flex h-80 w-full max-w-6xl items-stretch overflow-hidden">
 				<div class="marquee effect-3d scrollbar-none">
-					<p class="text-[12rem] font-black tracking-tighter text-gray-700 uppercase">
+					<p
+						class="text-[12rem] font-black tracking-tighter text-gray-400 uppercase dark:text-gray-700"
+					>
 						{#each Array(4) as _, i}
 							sim<span class="text-gradient">quiz</span>
 						{/each}
