@@ -5,8 +5,7 @@
 	import Meta from '$lib/components/layout/meta.svelte';
 
 	let { children } = $props();
-
-	onMount(async () => await detectVersion());
+	onMount(detectVersion);
 </script>
 
 <Meta />

@@ -31,16 +31,16 @@
 		@apply px-3 py-2 text-sm;
 	}
 	.btn-primary {
-		@apply hover:bg-teal-600 dark:text-white;
+		@apply hover:bg-teal-600 active:bg-teal-600 dark:text-white;
 	}
 	.btn-secondary {
-		@apply hover:bg-purple-600 dark:text-white;
+		@apply hover:bg-purple-600 active:bg-purple-600 dark:text-white;
 	}
 	.btn-accent {
-		@apply hover:bg-amber-600 dark:text-white;
+		@apply hover:bg-amber-600 active:bg-amber-600 dark:text-white;
 	}
 	.btn-info {
-		@apply hover:bg-blue-600 dark:text-white;
+		@apply hover:bg-blue-600 active:bg-blue-600 dark:text-white;
 	}
 
 	.card {

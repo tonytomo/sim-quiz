@@ -7,7 +7,7 @@
 	export let opacity: number = 0.1;
 	export let rotate: number = 0;
 	export let rounded: string = 'rounded-lg';
-	export let parallaxSpeed: number = 0.3;
+	export let parallaxSpeed: number = 0.1;
 
 	window.addEventListener('scroll', () => {
 		if (browser) {
