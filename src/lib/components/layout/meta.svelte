@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { assets, base } from '$app/paths';
 
-	export let title = 'SimQuiz - Quiz Platform for Simulation and Making Quizzes';
+	export let title = 'SimQuiz: Platform untuk Simulasi dan Membuat Kuis';
 	export let description =
-		'SimQuiz is a comprehensive quiz platform that empowers users to create, share, and play engaging quizzes on a wide range of topics. Whether you want to test your knowledge, challenge friends, or explore new subjects, SimQui makes quiz creation and participation easy and fun for everyone.';
+		'SimQuiz adalah platform kuis yang memungkinkan pengguna membuat, berbagi, dan memainkan kuis menarik tentang beragam topik. Baik kamu ingin menguji pengetahuan, menantang teman, atau menjelajahi topik baru, SimQuiz menjadikan pembuatan dan partisipasi kuis mudah dan menyenangkan bagi semua orang.';
 	const author = 'tonytomo';
 	const robots = 'index, follow';
 	const lightThemeColor = '#f3f4f6';
