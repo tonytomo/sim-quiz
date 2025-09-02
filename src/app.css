@@ -12,6 +12,8 @@
 	.btn {
 		@apply cursor-pointer rounded px-4 py-2 font-medium transition-colors;
 		@apply focus:ring-1 focus:outline-none;
+		@apply bg-white/90 hover:bg-white/80 dark:bg-gray-800/90 dark:hover:bg-gray-800/80;
+		@apply backdrop-blur-xs;
 		@apply text-gray-900 disabled:cursor-not-allowed;
 		@apply shadow-[0_0.115rem_0_0.115rem_#1a202c,0_0_0_0.115rem_#1a202c];
 		@apply dark:shadow-[0_0.115rem_0_0.115rem_#fff,0_0_0_0.115rem_#fff];
@@ -34,11 +36,32 @@
 	.btn-info {
 		@apply hover:bg-blue-600 dark:text-white;
 	}
+
+	.card {
+		@apply rounded-lg bg-white/10 p-6 backdrop-blur-xs dark:bg-gray-800/10;
+		@apply shadow-[0_0.115rem_0_0.115rem_#1a202c,0_0_0_0.115rem_#1a202c];
+		@apply dark:shadow-[0_0.115rem_0_0.115rem_#fff,0_0_0_0.115rem_#fff];
+	}
 }
 
 @layer utilities {
 	.text-gradient {
 		@apply bg-clip-text text-transparent;
 		@apply bg-gradient-to-r from-blue-500 via-teal-500 to-green-500;
+	}
+	.scrollbar-none::-webkit-scrollbar {
+		@apply size-0;
+	}
+
+	.scrollbar-none::-webkit-scrollbar-track {
+		@apply bg-transparent;
+	}
+
+	.scrollbar-none::-webkit-scrollbar-thumb {
+		@apply bg-transparent;
+	}
+
+	.scrollbar-none::-webkit-scrollbar-thumb:hover {
+		@apply bg-transparent;
 	}
 }

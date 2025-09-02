@@ -1,10 +1,6 @@
 # SimQuiz
 
-SimQuiz is a simple quiz game that allows you to create your own quizzes and play them. It is a fun way to test your knowledge and learn new things. 
-
-You can create quizzes with multiple choice questions and short answer questions. After you complete the quiz, you will receive feedback on your results and explanations for each question. 
-
-You can also encrypt your quiz file with a generated key to keep it secure.
+A simple quiz simulator built with a text-file parsing engine. Users can upload a plain text file containing quiz questions and answers, which the app then parses and converts into an interactive quiz.
 
 ## Features
 
