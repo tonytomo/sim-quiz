@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
 	import Ornament from '$lib/components/layout/ornament.svelte';
 	import { onMount } from 'svelte';
 
 	let onDragOver = false;
+	let dragCounter = 0;
 
 	onMount(() => {
 		const marquees = document.querySelectorAll<HTMLElement>('.marquee');
@@ -29,23 +29,38 @@
 		const dropZone = document.getElementById('drop-zone');
 		if (!dropZone) return;
 
+		dropZone.addEventListener('dragenter', (e) => {
+			e.preventDefault();
+			if (!e.dataTransfer?.types?.includes('Files')) return;
+			dragCounter++;
+			onDragOver = true;
+		});
+
 		dropZone.addEventListener('dragover', (e) => {
 			e.preventDefault();
-			onDragOver = true;
 		});
 
 		dropZone.addEventListener('dragleave', () => {
 			onDragOver = false;
+			dragCounter--;
+			if (dragCounter > 0) onDragOver = true;
 		});
 
 		dropZone.addEventListener('drop', (e) => {
 			e.preventDefault();
 			onDragOver = false;
+			dragCounter = 0;
 
 			const files = e.dataTransfer?.files;
 			if (files && files.length > 0) {
-				// Handle the dropped files here
-				console.log(files);
+				const acceptedFiles = Array.from(files).filter(
+					(file) =>
+						['text/plain', 'application/octet-stream'].includes(file.type) ||
+						file.name.endsWith('.txt') ||
+						file.name.endsWith('.squiz')
+				);
+				if (acceptedFiles.length === 0) return;
+				console.log('Accepted files:', acceptedFiles);
 			}
 		});
 	});
@@ -81,14 +96,16 @@
 		<hgroup class="flex flex-col items-center text-center">
 			<div class="mx-auto flex h-80 w-full max-w-6xl items-stretch overflow-hidden">
 				<div class="marquee effect-3d scrollbar-none">
-					<h1 class="text-[12rem] font-black tracking-tighter text-gray-700 uppercase">
+					<p class="text-[12rem] font-black tracking-tighter text-gray-700 uppercase">
 						{#each Array(4) as _, i}
 							sim<span class="text-gray-400">quiz</span>
 						{/each}
-					</h1>
+					</p>
 				</div>
 			</div>
-			<p class="px-4 text-2xl font-medium">Platform Kuis untuk Simulasi dan Membuat Kuis</p>
+			<h1 class="px-4 text-xl font-medium md:text-2xl">
+				SimQuiz: Platform Kuis untuk Simulasi dan Membuat Kuis
+			</h1>
 		</hgroup>
 
 		<div class="mt-8">
