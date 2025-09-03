@@ -4,7 +4,7 @@
 	export let pos: 'tl' | 'tr' | 'bl' | 'br' = 'tr';
 	export let size: number = 24;
 	export let color: string = 'currentColor';
-	export let opacity: number = 0.1;
+	export let opacity: number = 0.02;
 	export let rotate: number = 0;
 	export let rounded: string = 'rounded-lg';
 	export let parallaxSpeed: number = 0.1;
