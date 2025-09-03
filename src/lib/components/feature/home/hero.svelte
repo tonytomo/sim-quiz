@@ -26,7 +26,7 @@
 		</hgroup>
 
 		<div class="mt-8 text-center" in:fly={{ y: 20, duration: 400, delay: 200 }}>
-			<a href="/start" title="Mulai Kuis" class="btn btn-wide btn-lg btn-primary">Mulai</a>
+			<a href="/start" title="Mulai Kuis" class="btn btn-lg btn-primary">Mulai Simulasi</a>
 			<p class="pt-4 text-sm text-gray-600 dark:text-gray-400">atau letakkan file di sini</p>
 		</div>
 	{/if}

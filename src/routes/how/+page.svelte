@@ -68,20 +68,13 @@
 				</a>
 			</section>
 
-			<!-- ## Manual using any text editor (Notepad) -->
-			<!-- Follow every instruction (easy to master) -->
-			<!-- 1. Text structure -->
-			<!-- 2. Components -->
-			<!-- 3. If using text reference -->
-			<!-- 4. Question Type -->
-			<!-- 5. Done -->
 			<section class="card flex flex-col gap-4 text-center">
 				<h3 class="text-2xl font-semibold md:text-3xl">Metode Manual dengan Editor Teks</h3>
 				<p class="text-lg text-gray-600 dark:text-gray-400">
 					Kontrol penuh dan bisa dimana saja! Ikuti panduan kami untuk membuat kuismu menggunakan
 					editor teks seperti <b>Notepad</b>.
 				</p>
-				<a href="#structure" title="Baca Panduan" class="btn btn-lg btn-success mt-4 self-center">
+				<a href="#structure" title="Baca Panduan" class="btn btn-lg btn-info mt-4 self-center">
 					Mulai Membaca
 				</a>
 			</section>
