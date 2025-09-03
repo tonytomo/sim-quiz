@@ -9,9 +9,9 @@
 	} from '$lib/constant/quiz';
 	import { EQuestionType, type IQuizQuestion, type IQuizRef } from '$lib/types/quiz';
 
-	type TFocus = 'intro' | 'settings' | 'refs' | 'questions';
+	type TFocus = 'review' | 'intro' | 'settings' | 'refs' | 'questions';
 
-	let currentFocus: TFocus = $state('intro');
+	let currentFocus: TFocus = $state('review');
 	let quizIntro = $state(DEFAULT_QUIZ_INTRO);
 	let quizSettings = $state(DEFAULT_QUIZ_SETTINGS);
 	let newQuizRef: IQuizRef = $state(DEFAULT_QUIZ_REF);
@@ -52,6 +52,11 @@
 	function removeQuizQuestion(id: string) {
 		quizQuestions = quizQuestions.filter((ref) => ref.id !== id);
 	}
+
+	function generateQuiz() {
+		// Handle generate quiz
+		console.log('Generating Quiz');
+	}
 </script>
 
 <Meta
@@ -68,6 +73,13 @@
 		</div>
 
 		<nav class="my-auto flex flex-col gap-4">
+			<button
+				class="btn btn-info"
+				class:btn-active={currentFocus === 'review'}
+				onclick={() => (currentFocus = 'review')}
+			>
+				Review
+			</button>
 			<button
 				class="btn btn-info"
 				class:btn-active={currentFocus === 'intro'}
@@ -99,10 +111,24 @@
 		</nav>
 	</aside>
 
+	<!-- TODO: Simplify style -->
+
 	<section
 		class="scrollbar-simple size-full overflow-y-auto rounded-4xl border-12 border-gray-100 bg-gray-100 p-6 dark:border-gray-900 dark:bg-gray-950"
 	>
-		{#if currentFocus === 'intro'}
+		{#if currentFocus === 'review'}
+			<div class="flex flex-col gap-4">
+				<h2 class="text-gradient place-self-center text-4xl font-black">Review</h2>
+				<!-- TODO: Buat desain pakai window -->
+				<p>Nama Kuis: {quizIntro.title}</p>
+				<p>Jumlah Referensi: {quizRefs.length}</p>
+				<p>Jumlah Pertanyaan: {quizQuestions.length}</p>
+
+				<button class="btn btn-lg btn-success place-self-start" onclick={generateQuiz}>
+					Generasi Kuis
+				</button>
+			</div>
+		{:else if currentFocus === 'intro'}
 			<div class="flex flex-col gap-16">
 				<h2 class="text-gradient place-self-center text-4xl font-black">Kuis Baru</h2>
 				<div class="flex flex-col gap-4">
@@ -263,7 +289,7 @@
 								<span class="font-bold">{newQuizQuestion.difficulty}</span>
 							</label>
 
-							<!-- Pilihan, Jawaban, Penjelasan -->
+							<!-- TODO: Pilihan, Jawaban, Penjelasan -->
 
 							<button class="btn btn-primary place-self-center" onclick={insertQuizQuestion}>
 								Tambah Pertanyaan
