@@ -1,13 +1,13 @@
-import type { QuizQuestion } from '$lib/types/question';
-import type { QuizResult } from '$lib/types/result';
-import type { QuizSetting } from '$lib/types/config';
+import type { IConfig } from '$lib/types/olds/config';
+import type { IQuestions } from '$lib/types/olds/question';
+import type { IResult } from '$lib/types/olds/result';
 
 export function calculateResult(
-	settings: QuizSetting,
-	questions: QuizQuestion,
+	settings: IConfig,
+	questions: IQuestions,
 	answers: string[],
 	timeLeft: number
-): QuizResult {
+): IResult {
 	let score = 0;
 	const corrects: number[] = [];
 	const wrongs: number[] = [];

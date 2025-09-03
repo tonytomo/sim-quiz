@@ -1,4 +1,4 @@
-import type { IProfile } from '$lib/types/profile';
+import type { IProfile } from '$lib/types/olds/profile';
 import { writable } from 'svelte/store';
 
 const profile = writable<IProfile>({

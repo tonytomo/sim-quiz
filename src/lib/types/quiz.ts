@@ -1,13 +1,55 @@
-import type { IConfig } from './config';
-import type { IFile } from './file';
-import type { IQuestions } from './question';
-import type { IResult } from './result';
-import type { EStep } from './step';
-
 export interface IQuiz {
-	step: EStep;
-	file?: IFile;
-	config?: IConfig;
-	questions?: IQuestions;
-	result?: IResult;
+	intro: IQuizIntro;
+	setting: IQuizSettings;
+	refs: IQuizRef[];
+	questions: IQuizQuestion[];
+	result: IQuizResult | null;
+}
+
+export interface IQuizIntro {
+	title: string;
+	instruction: string;
+	example: string | null;
+}
+
+export interface IQuizSettings {
+	numberOfQuestion: number;
+	timePerQuestionInSecond: number;
+	shuffleQuestion: boolean;
+	oneWay: boolean;
+}
+
+export interface IQuizRef {
+	id: string;
+	label: string;
+	paragraphs: string[];
+}
+
+export interface IQuizQuestion {
+	id: string;
+	refId: string | null;
+	type: EQuestionType;
+	question: string;
+	options: string[];
+	answer: string;
+	point: number;
+	difficulty: TDifficultyLevel;
+	explanation: string[];
+}
+
+export enum EQuestionType {
+	MultipleChoice = 'multiple-choice',
+	ShortAnswer = 'short-answer'
+}
+
+export type TDifficultyLevel = 1 | 2 | 3 | 4 | 5;
+
+export interface IQuizResult {
+	score: number;
+	answers: (string | undefined)[];
+	corrects: number[];
+	wrongs: number[];
+	unanswered: number[];
+	doubts: number[];
+	timeLeftInSecond: number;
 }

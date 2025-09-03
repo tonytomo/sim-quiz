@@ -38,6 +38,9 @@
 	.btn-sm {
 		@apply px-3 py-2 text-sm;
 	}
+	.btn-active {
+		@apply bg-gray-300 dark:bg-gray-600;
+	}
 	.btn-primary {
 		@apply hover:bg-teal-600 active:bg-teal-600 dark:text-white;
 	}
@@ -53,11 +56,65 @@
 	.btn-success {
 		@apply hover:bg-green-600 active:bg-green-600 dark:text-white;
 	}
+	.btn-danger {
+		@apply bg-red-700 hover:bg-red-600 active:bg-red-600 dark:bg-red-500 dark:text-white;
+	}
+
+	.input {
+		@apply w-full rounded-lg border p-4 text-base;
+		@apply bg-white/90 dark:bg-gray-800/90;
+		@apply text-gray-900 dark:text-gray-100;
+		@apply border-2 border-b-4 border-gray-300 dark:border-gray-700;
+		@apply focus:border-gray-900 focus:outline-none dark:focus:border-gray-100;
+		@apply max-w-md;
+	}
+
+	.select {
+		@apply w-full rounded-lg border p-4 text-base;
+		@apply bg-white/90 dark:bg-gray-800/90;
+		@apply text-gray-900 dark:text-gray-100;
+		@apply border-2 border-b-4 border-gray-300 dark:border-gray-700;
+		@apply focus:border-gray-900 focus:outline-none dark:focus:border-gray-100;
+		@apply max-w-md;
+	}
+
+	.textarea {
+		@apply w-full rounded-lg border p-4 text-base;
+		@apply bg-white/90 dark:bg-gray-800/90;
+		@apply text-gray-900 dark:text-gray-100;
+		@apply border-2 border-b-4 border-gray-300 dark:border-gray-700;
+		@apply focus:border-gray-900 focus:outline-none dark:focus:border-gray-100;
+		@apply resize-none;
+		@apply max-w-md;
+	}
+
+	.checkbox {
+		@apply size-8 rounded border-2 border-gray-300 bg-white/90 text-gray-900 focus:ring-1 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100;
+		@apply focus:border-gray-900 dark:focus:border-gray-100;
+	}
+
+	.range {
+		@apply appearance-none rounded-lg bg-gray-200 dark:bg-gray-800;
+		@apply border-2 border-b-4 border-gray-300 dark:border-gray-700;
+	}
+	.range::-webkit-slider-thumb {
+		@apply size-8 cursor-pointer appearance-none rounded-md border-none bg-teal-500 shadow-md transition-colors;
+	}
+	.range:focus::-webkit-slider-thumb {
+		@apply outline-none;
+	}
+	.range::-webkit-slider-runnable-track {
+		@apply rounded-lg bg-gray-200 dark:bg-gray-800;
+	}
 
 	.card {
 		@apply rounded-lg bg-white/10 p-6 backdrop-blur-xs dark:bg-gray-800/10;
 		@apply shadow-[0_0.115rem_0_0.115rem_#1a202c,0_0_0_0.115rem_#1a202c];
 		@apply dark:shadow-[0_0.115rem_0_0.115rem_#fff,0_0_0_0.115rem_#fff];
+	}
+
+	.card-border {
+		@apply flex flex-col gap-4 rounded-lg border-2 border-b-4 border-gray-300 p-4 dark:border-gray-700;
 	}
 
 	.window {
@@ -84,7 +141,7 @@
 
 @layer utilities {
 	.text-gradient {
-		@apply bg-clip-text text-transparent pb-2;
+		@apply bg-clip-text pb-2 text-transparent;
 		@apply bg-gradient-to-r from-blue-500 via-teal-500 to-green-500;
 	}
 
@@ -107,5 +164,19 @@
 	}
 	.scrollbar-none::-webkit-scrollbar-thumb:hover {
 		@apply bg-transparent;
+	}
+
+	.scrollbar-simple::-webkit-scrollbar {
+		@apply size-2;
+	}
+	.scrollbar-simple::-webkit-scrollbar-track {
+		@apply bg-transparent;
+	}
+	.scrollbar-simple::-webkit-scrollbar-thumb {
+		@apply bg-gray-300 dark:bg-gray-700;
+		@apply rounded;
+	}
+	.scrollbar-simple::-webkit-scrollbar-thumb:hover {
+		@apply bg-gray-500 dark:bg-gray-600;
 	}
 }
